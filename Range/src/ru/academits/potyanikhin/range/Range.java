@@ -39,8 +39,8 @@ public class Range {
 
     public String stringRangeArray(Range[] rangeArray) {
         String string = "";
-        for (int i = 0; i < rangeArray.length; i++) {
-            string += (stringRange(rangeArray[i]));
+        for (Range range : rangeArray) {
+            string += (stringRange(range));
         }
         return string;
     }
@@ -64,7 +64,8 @@ public class Range {
     public String getUnionInterval(Range secondRange) {
         Range unionIntervalRange = new Range(0, 0);
 
-        if (getCrossCheck(from, to, secondRange.from, secondRange.to)) {
+        if ((getCrossCheck(from, to, secondRange.from, secondRange.to)) ||
+                ((to == secondRange.from) || (from == secondRange.to))) {
             unionIntervalRange.from = Math.min(from, secondRange.from);
             unionIntervalRange.to = Math.max(to, secondRange.to);
 
@@ -73,6 +74,28 @@ public class Range {
             Range[] rangeArray = new Range[2];
             rangeArray[0] = this;
             rangeArray[1] = secondRange;
+
+            return stringRangeArray(rangeArray);
+        }
+    }
+
+    public String getDifferenceInterval(Range secondRange) {
+        if (((from >= secondRange.from) && (to <= secondRange.to))) {
+            return null;
+        } else if (!getCrossCheck(from, to, secondRange.from, secondRange.to)) {
+            return stringRange(this);
+        } else if (from == secondRange.from) {
+            Range differenceIntervalRange = new Range(Math.min(to, secondRange.to), Math.max(to, secondRange.to));
+
+            return stringRange(differenceIntervalRange);
+        } else if (to == secondRange.to) {
+            Range differenceIntervalRange = new Range(Math.min(from, secondRange.from), Math.max(from, secondRange.from));
+
+            return stringRange(differenceIntervalRange);
+        } else {
+            Range[] rangeArray = new Range[2];
+            rangeArray[0] = new Range(Math.min(from, secondRange.from), Math.max(from, secondRange.from));
+            rangeArray[1] = new Range(Math.min(to, secondRange.to), Math.max(to, secondRange.to));
 
             return stringRangeArray(rangeArray);
         }
