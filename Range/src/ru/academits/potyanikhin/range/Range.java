@@ -32,4 +32,16 @@ public class Range {
     public boolean isInside(double number) {
         return (number >= from) && (number <= to);
     }
+
+    public Range getCrossInterval(Range range) {
+        this.from = Math.max(from, range.from);
+        this.to = Math.min(to, range.to);
+        return range;
+    }
+
+    public Range getUnionInterval(Range range) {
+        this.from = Math.max(from, range.from);
+        this.to = Math.max(to, range.to);
+return range;
+    }
 }
