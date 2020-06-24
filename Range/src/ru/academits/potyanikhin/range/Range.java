@@ -33,15 +33,23 @@ public class Range {
         return (number >= from) && (number <= to);
     }
 
-    public Range getCrossInterval(Range range) {
-        this.from = Math.max(from, range.from);
-        this.to = Math.min(to, range.to);
-        return range;
+    public String stringRange(Range range) {
+        return ("от " + range.getFrom() + " до " + range.getTo());
+    }
+
+    public String getCrossInterval(Range range) {
+        if ((range.from > to) || (from < range.to)) {
+            return null;
+        }
+
+        range.from = Math.max(from, range.from);
+        range.to = Math.min(to, range.to);
+        return stringRange(range);
     }
 
     public Range getUnionInterval(Range range) {
-        this.from = Math.max(from, range.from);
-        this.to = Math.max(to, range.to);
-return range;
+        range.from = Math.max(from, range.from);
+        range.to = Math.max(to, range.to);
+        return range;
     }
 }

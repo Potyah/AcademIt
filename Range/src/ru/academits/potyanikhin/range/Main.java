@@ -7,9 +7,6 @@ public class Main {
 
         double number = 5.6;
 
-        System.out.println(range1);
-
-
         if (range1.isInside(number)) {
             System.out.println("Число " + number + " принадлежит заданному диапазону");
         } else {
@@ -18,8 +15,7 @@ public class Main {
 
         System.out.println("Длинна отрезка: " + range1.getLength());
 
-        range1.getCrossInterval(range2);
-        System.out.println("Интервал пересечения данных интервалов от " + range1.getFrom() + " до " + range1.getTo());
+        System.out.println("Интервал пересечения данных интервалов " + range1.getCrossInterval(range2));
 
 
     }
