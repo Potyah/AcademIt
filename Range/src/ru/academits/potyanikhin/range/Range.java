@@ -42,6 +42,7 @@ public class Range {
         for (Range range : rangeArray) {
             string += (stringRange(range));
         }
+
         return string;
     }
 
