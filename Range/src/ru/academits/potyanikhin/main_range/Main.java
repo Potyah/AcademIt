@@ -1,9 +1,11 @@
-package ru.academits.potyanikhin.range;
+package ru.academits.potyanikhin.main_range;
+
+import ru.academits.potyanikhin.range.Range;
 
 public class Main {
     public static void main(String[] args) {
-        Range range1 = new Range(2, 8);
-        Range range2 = new Range(8, 10);
+        Range range1 = new Range(5.6, 7.4);
+        Range range2 = new Range(3.2, 8.9);
 
         double number = 5.6;
 
