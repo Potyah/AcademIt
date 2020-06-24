@@ -2,8 +2,8 @@ package ru.academits.potyanikhin.range;
 
 public class Main {
     public static void main(String[] args) {
-        Range range1 = new Range(3, 8);
-        Range range2 = new Range(4, 9);
+        Range range1 = new Range(2, 2.1);
+        Range range2 = new Range(3, 3.1);
 
         double number = 5.6;
 
@@ -17,6 +17,6 @@ public class Main {
 
         System.out.println("Интервал пересечения данных интервалов " + range1.getCrossInterval(range2));
 
-
+        System.out.println("Интервал объединения данных интервалов " + range1.getUnionInterval(range2));
     }
 }
