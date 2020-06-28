@@ -1,4 +1,4 @@
-package ru.academits.potyanikhin.main_range;
+package ru.academits.potyanikhin.range_main;
 
 import ru.academits.potyanikhin.range.Range;
 
@@ -17,10 +17,10 @@ public class Main {
 
         System.out.println("Длинна отрезка: " + range1.getLength());
 
-        System.out.println("Пересечение данных интервалов: " + range1.getCrossInterval(range2));
+        System.out.println("Пересечение данных интервалов: " + range1.getIntersection(range2));
 
-        System.out.println("Объединение данных интервалов: " + range1.getUnionInterval(range2));
+        System.out.println("Объединение данных интервалов: " +    range1.getUnion(range2));
 
-        System.out.println("Разность данных интервалов: " + range1.getDifferenceInterval(range2));
+        System.out.println("Разность данных интервалов: " + range1.getDifference(range2));
     }
 }
