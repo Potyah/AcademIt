@@ -34,17 +34,7 @@ public class Range {
     }
 
     public String toString() {
-        return ("[от " + from + " до " + to + "]; ");
-    }
-
-    public static String getStringRangeArray(Range[] rangeArray) {
-        String string = "";
-
-        for (Range range : rangeArray) {
-                  string += range;
-        }
-
-        return string;
+        return ("от " + from + " до " + to);
     }
 
     public static boolean isIntersectionCheck(double firstFrom, double firstTo, double secondFrom, double secondTo) {

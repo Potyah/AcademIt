@@ -2,10 +2,12 @@ package ru.academits.potyanikhin.range_main;
 
 import ru.academits.potyanikhin.range.Range;
 
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) {
-        Range range1 = new Range(5.6, 7.4);
-        Range range2 = new Range(3.2, 8.9);
+        Range range1 = new Range(3.1, 7.4);
+        Range range2 = new Range(4, 8.9);
 
         double number = 5.6;
 
@@ -17,10 +19,10 @@ public class Main {
 
         System.out.println("Длинна отрезка: " + range1.getLength());
 
-        System.out.println("Пересечение данных интервалов: " + range1.getIntersection(range2));
+        System.out.println("Пересечение данных интервалов: [" + range1.getIntersection(range2) + "]");
 
-        System.out.println("Объединение данных интервалов: " +    range1.getUnion(range2));
+        System.out.println("Объединение данных интервалов: " + Arrays.toString(range1.getUnion(range2)));
 
-        System.out.println("Разность данных интервалов: " + range1.getDifference(range2));
+        System.out.println("Разность данных интервалов: " + Arrays.toString(range1.getDifference(range2)));
     }
 }
