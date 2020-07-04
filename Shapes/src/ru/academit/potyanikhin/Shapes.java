@@ -88,8 +88,4 @@ public class Shapes {
     public static double getPerimeter(Circle circle) {
         return 2 * Math.PI * circle.getRadius();
     }
-
-
 }
-
-class CompareShapes implements Comporator
