@@ -1,5 +1,7 @@
 package ru.academit.potyanikhin;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -20,22 +22,16 @@ public class Main {
         System.out.println(Shapes.getHeight(rectangle));
 
 
-        Shapes[] shapesArray = new Shapes[] { new Circle(6),
+        Shapes[] shapesArray = new Shapes[]{new Circle(6),
                 new Triangle(3, 5, 9, 7, 9, 10),
                 new Square(45),
                 new Rectangle(58, 60),
                 new Circle(56)};
 
+        Arrays.sort (shapesArray, areaComparator);
 
-        for (Object o : shapesArray) {
-
-
-    }
-
-
-
-
-
+        //   for (Object o : shapesArray) {
 
     }
 }
+

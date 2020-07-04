@@ -6,7 +6,6 @@ public class Square extends Shapes {
 
     public Square(double sideLength) {
         this.sideLength = sideLength;
-
     }
 
     public double getSideLength() {
@@ -16,6 +15,12 @@ public class Square extends Shapes {
     public void setSideLength(double sideLength) {
         this.sideLength = sideLength;
     }
+
+    @Override
+    public double getWidth() {
+        return sideLength;
+    }
+
 
     public String getName() {
         return name;

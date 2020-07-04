@@ -1,22 +1,17 @@
 package ru.academit.potyanikhin;
 
-public class Shapes {
+import java.util.Comparator;
 
-    public static double getWidth(Square square) {
-        return square.getSideLength();
-    }
+public abstract class Shapes {
 
-    public static double getWidth(Triangle triangle) {
-        return Math.max(Math.max(triangle.getX1(), triangle.getX2()), triangle.getX3()) - Math.min(Math.min(triangle.getX1(), triangle.getX2()), triangle.getX3());
-    }
+    public abstract double getWidth();
 
-    public static double getWidth(Rectangle rectangle) {
-        return Math.max(rectangle.getSideLength1(), rectangle.getSideLength2());
-    }
 
-    public static double getWidth(Circle circle) {
-        return 2 * circle.getRadius();
-    }
+
+
+ //   public static double getWidth(Circle circle) {
+ //       return 2 * circle.getRadius();
+ //   }
 
     public static double getHeight(Square square) {
         return square.getSideLength();

@@ -69,4 +69,9 @@ public class Triangle extends Shapes {
     public String getName() {
         return name;
     }
+
+    @Override
+    public double getWidth() {
+           return Math.max(Math.max(x1, x2), x3) - Math.min(Math.min(x1, x2), x3);
+         }
 }

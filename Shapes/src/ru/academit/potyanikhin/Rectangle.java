@@ -29,4 +29,11 @@ public class Rectangle extends Shapes {
     public String getName() {
         return name;
     }
+
+
+    public double getWidth() {
+        return Math.max(sideLength1, sideLength2);
+    }
 }
+
+
