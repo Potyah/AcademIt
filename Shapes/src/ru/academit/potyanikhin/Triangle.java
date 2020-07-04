@@ -72,6 +72,47 @@ public class Triangle extends Shapes {
 
     @Override
     public double getWidth() {
-           return Math.max(Math.max(x1, x2), x3) - Math.min(Math.min(x1, x2), x3);
-         }
+        return Math.max(Math.max(x1, x2), x3) - Math.min(Math.min(x1, x2), x3);
+    }
+
+    @Override
+    public double getHeight() {
+        return Math.max(Math.max(y1, y2), y3) - Math.min(Math.min(y1, y2), y3);
+    }
+
+    @Override
+    public double getArea() {
+        double epsilon = 1.0e-10;
+
+        if (Math.abs((x3 - x1 * y2 - y1) - (y3 - y1) * (x3 - x1)) <= epsilon) {
+            return 0;
+        }
+
+        double a = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        double b = Math.sqrt(Math.pow(x3 - x2, 2) + Math.pow(y3 - y2, 2));
+        double c = Math.sqrt(Math.pow(x3 - x1, 2) + Math.pow(y3 - y1, 2));
+
+        double halfPerimeter = (a + b + c) / 2;
+
+        return Math.sqrt(halfPerimeter * (halfPerimeter - a) * (halfPerimeter - b) * (halfPerimeter - c));
+    }
+
+    @Override
+    public double getPerimeter() {
+        double epsilon = 1.0e-10;
+
+        if (Math.abs((x3 - x1) * (y2 - y1) - (y3 - y1) * (x2 - x1)) <= epsilon) {
+            return 0;
+        }
+
+        double a = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        double b = Math.sqrt(Math.pow(x3 - x2, 2) + Math.pow(y3 - y2, 2));
+        double c = Math.sqrt(Math.pow(x3 - x1, 2) + Math.pow(y3 - y1, 2));
+
+        return a + b + c;
+    }
+
+    public String toString() {
+        return name + " с точками x1 = " + x1 + " x2 = " + x2 + " x3 = " + x3 + " y1 = " + y1 + " y2 = " + y2 + " y3 = " + y3;
+    }
 }

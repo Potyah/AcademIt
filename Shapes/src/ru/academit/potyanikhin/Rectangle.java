@@ -30,10 +30,27 @@ public class Rectangle extends Shapes {
         return name;
     }
 
-
+    @Override
     public double getWidth() {
         return Math.max(sideLength1, sideLength2);
     }
+
+    @Override
+    public double getHeight() {
+        return Math.min(sideLength1, sideLength2);
+    }
+
+    @Override
+    public double getArea() {
+        return sideLength1 * sideLength2;
+    }
+
+    @Override
+    public double getPerimeter() {
+        return (sideLength1 + sideLength2) * 2;
+    }
+
+    public String toString() {
+        return name + " со сторонами " + sideLength1 + " и " + sideLength2;
+    }
 }
-
-
