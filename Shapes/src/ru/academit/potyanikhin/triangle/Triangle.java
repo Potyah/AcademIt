@@ -1,4 +1,6 @@
-package ru.academit.potyanikhin;
+package ru.academit.potyanikhin.triangle;
+
+import ru.academit.potyanikhin.shapes.Shapes;
 
 public class Triangle extends Shapes {
     private static final String name = "Треугольник";

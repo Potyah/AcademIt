@@ -1,4 +1,6 @@
-package ru.academit.potyanikhin;
+package ru.academit.potyanikhin.square;
+
+import ru.academit.potyanikhin.shapes.Shapes;
 
 public class Square extends Shapes {
     private static final String name = "Квадрат";

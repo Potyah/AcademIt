@@ -1,4 +1,6 @@
-package ru.academit.potyanikhin;
+package ru.academit.potyanikhin.circle;
+
+import ru.academit.potyanikhin.shapes.Shapes;
 
 public class Circle extends Shapes {
     private static final String name = "Круг";

@@ -1,4 +1,4 @@
-package ru.academit.potyanikhin;
+package ru.academit.potyanikhin.shapes;
 
 public abstract class Shapes {
     public abstract double getWidth();

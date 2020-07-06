@@ -1,4 +1,6 @@
-package ru.academit.potyanikhin;
+package ru.academit.potyanikhin.rectangle;
+
+import ru.academit.potyanikhin.shapes.Shapes;
 
 public class Rectangle extends Shapes {
     private static final String name = "Прямоугольник";

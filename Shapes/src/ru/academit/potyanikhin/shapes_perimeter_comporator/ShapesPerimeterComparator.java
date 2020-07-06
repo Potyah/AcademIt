@@ -1,4 +1,6 @@
-package ru.academit.potyanikhin;
+package ru.academit.potyanikhin.shapes_perimeter_comporator;
+
+import ru.academit.potyanikhin.shapes.Shapes;
 
 import java.util.Comparator;
 

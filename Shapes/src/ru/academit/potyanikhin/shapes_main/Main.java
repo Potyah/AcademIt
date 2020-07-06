@@ -1,4 +1,12 @@
-package ru.academit.potyanikhin;
+package ru.academit.potyanikhin.shapes_main;
+
+import ru.academit.potyanikhin.circle.Circle;
+import ru.academit.potyanikhin.rectangle.Rectangle;
+import ru.academit.potyanikhin.shapes.Shapes;
+import ru.academit.potyanikhin.shapes_area_comporator.ShapesAreaComparator;
+import ru.academit.potyanikhin.shapes_perimeter_comporator.ShapesPerimeterComparator;
+import ru.academit.potyanikhin.square.Square;
+import ru.academit.potyanikhin.triangle.Triangle;
 
 import java.util.Arrays;
 
