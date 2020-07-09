@@ -38,7 +38,7 @@ public class Range {
     }
 
     private boolean isIntersection(Range range) {
-        return (from < range.to) && (range.from < to);
+        return from < range.to && range.from < to;
     }
 
     public Range getIntersection(Range range) {
