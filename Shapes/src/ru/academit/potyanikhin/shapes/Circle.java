@@ -1,8 +1,8 @@
-package ru.academit.potyanikhin.circle;
+package ru.academit.potyanikhin.shapes;
 
-import ru.academit.potyanikhin.shapes.Shapes;
+import ru.academit.potyanikhin.shape_interface.Shape;
 
-public class Circle extends Shapes {
+public class Circle implements Shape {
     private static final String name = "Круг";
     private double radius;
 

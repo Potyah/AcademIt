@@ -1,8 +1,8 @@
-package ru.academit.potyanikhin.square;
+package ru.academit.potyanikhin.shapes;
 
-import ru.academit.potyanikhin.shapes.Shapes;
+import ru.academit.potyanikhin.shape_interface.Shape;
 
-public class Square extends Shapes {
+public class Square implements Shape {
     private static final String name = "Квадрат";
     private double sideLength;
 
@@ -33,6 +33,7 @@ public class Square extends Shapes {
         return Math.pow(sideLength, 2);
     }
 
+    @Override
     public double getPerimeter() {
         return 4 * sideLength;
     }
