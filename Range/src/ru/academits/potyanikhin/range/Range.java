@@ -50,7 +50,7 @@ public class Range {
     }
 
     public Range[] getUnion(Range range) {
-        if ((isIntersection(range)) || (to == range.from || from == range.to)) {
+        if (isIntersection(range) || (to == range.from || from == range.to)) {
             return new Range[]{new Range(Math.min(from, range.from), Math.max(to, range.to))};
         }
 
