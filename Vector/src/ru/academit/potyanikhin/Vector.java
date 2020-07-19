@@ -14,7 +14,6 @@ public class Vector {
     public Vector(Vector vector) {
         this.n = vector.n;
         this.vectorArray = vector.vectorArray;
-
     }
 
     public Vector(double[] vectorArray) {
@@ -63,15 +62,10 @@ public class Vector {
     public Vector vectorSum(Vector vector) {
         if (this.vectorArray.length > vector.vectorArray.length) {
             return getVectorSum(this.vectorArray, vectorArray);
-
-
         }
 
-
         return getVectorSum(vector.vectorArray, this.vectorArray);
-
     }
-
 
     public void vectorReturn() {
         for (int i = 0; i < this.vectorArray.length; i++) {
