@@ -1,9 +1,7 @@
-
-
 import ru.academit.potyanikhin.Vector;
 
 public class main {
-    public static void main(String[] args) throws CloneNotSupportedException {
+    public static void main(String[] args)  {
 
         double[] array = {5.6, 4, 6.7};
         double[] array2 = {5.5, 4, 6.5,5.5, 4, 6.5, 8};

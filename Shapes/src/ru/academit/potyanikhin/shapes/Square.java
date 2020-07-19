@@ -38,6 +38,7 @@ public class Square implements Shape {
         return 4 * sideLength;
     }
 
+    @Override
     public String toString() {
         return name + " со стороной " + sideLength;
     }

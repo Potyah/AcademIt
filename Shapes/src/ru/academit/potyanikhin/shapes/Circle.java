@@ -42,6 +42,7 @@ public class Circle implements Shape {
         return 2 * Math.PI * radius;
     }
 
+    @Override
     public String toString() {
         return name + " с радиусом " + radius;
     }

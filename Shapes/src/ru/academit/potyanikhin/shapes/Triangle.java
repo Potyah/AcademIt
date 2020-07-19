@@ -11,7 +11,7 @@ public class Triangle implements Shape {
     private double x3;
     private double y3;
 
-    public Triangle(double x1, double x2, double x3, double y1, double y2, double y3) {
+    public Triangle(double x1,double y1, double x2, double y2, double x3, double y3) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
@@ -76,6 +76,12 @@ public class Triangle implements Shape {
         return name;
     }
 
+    private boolean isTriangleSidesOnStraightLine() {
+        double epsilon = 1.0e-10;
+
+        return Math.abs((x3 - x1) * (y2 - y1) - (y3 - y1) * (x2 - x1)) <= epsilon;
+    }
+
     @Override
     public double getWidth() {
         return Math.max(Math.max(x1, x2), x3) - Math.min(Math.min(x1, x2), x3);
@@ -88,9 +94,7 @@ public class Triangle implements Shape {
 
     @Override
     public double getArea() {
-        double epsilon = 1.0e-10;
-
-        if (Math.abs((x3 - x1 * y2 - y1) - (y3 - y1) * (x3 - x1)) <= epsilon) {
+        if (isTriangleSidesOnStraightLine()) {
             return 0;
         }
 
@@ -105,14 +109,18 @@ public class Triangle implements Shape {
 
     @Override
     public double getPerimeter() {
-
         double a = getSideLength(x1, y1, x2, y2);
         double b = getSideLength(x2, y2, x3, y3);
         double c = getSideLength(x1, y1, x3, y3);
 
+        if (isTriangleSidesOnStraightLine()) {
+            return Math.max(Math.max(a, b), c);
+        }
+
         return a + b + c;
     }
 
+    @Override
     public String toString() {
         return name + " с точками x1 = " + x1 + " x2 = " + x2 + " x3 = " + x3 + " y1 = " + y1 + " y2 = " + y2 + " y3 = " + y3;
     }
