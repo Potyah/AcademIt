@@ -3,17 +3,12 @@ package ru.academit.potyanikhin;
 
 import java.util.Arrays;
 
-public class Vector {
-    private final double[] vectorArray;
+public class Vector implements Cloneable {
+    private double[] vectorArray;
     private int n;
 
     public Vector(int n) {
         vectorArray = new double[n];
-    }
-
-    public Vector(Vector vector) {
-        this.n = vector.n;
-        this.vectorArray = vector.vectorArray;
     }
 
     public Vector(double[] vectorArray) {
@@ -28,12 +23,28 @@ public class Vector {
         }
     }
 
+    public Vector(Vector vector) {
+        Vector vectorClone = null;
+
+        try {
+             vectorClone = (Vector) vector.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        this.vectorClone;
+    }
+
     public double[] getVectorArray() {
         return vectorArray;
     }
 
     public int getN() {
         return n;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     @Override
@@ -49,11 +60,11 @@ public class Vector {
     }
 
 
-    public static Vector getVectorSum (double[] vector, double[] vector1) {
+    public static Vector getVectorSum(double[] vector, double[] vector1) {
         Vector vectorSum = new Vector(vector);
 
         for (int i = 0; i < vector1.length; i++) {
-            vectorSum.vectorArray[i] += vector1 [i];
+            vectorSum.vectorArray[i] += vector1[i];
         }
 
         return vectorSum;
