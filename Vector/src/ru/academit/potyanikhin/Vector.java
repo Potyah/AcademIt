@@ -24,14 +24,7 @@ public class Vector implements Cloneable {
     }
 
     public Vector(Vector vector) {
-        Vector vectorClone = null;
-
-        try {
-             vectorClone = (Vector) vector.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        this.vectorClone;
+        this(vector.getVectorArray());
     }
 
     public double[] getVectorArray() {
@@ -40,11 +33,6 @@ public class Vector implements Cloneable {
 
     public int getN() {
         return n;
-    }
-
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
     }
 
     @Override
@@ -59,9 +47,20 @@ public class Vector implements Cloneable {
         return vector.vectorArray.length;
     }
 
+    public Vector vectorSum(Vector vector) {
+        if (this.vectorArray.length > vector.vectorArray.length) {
+            return getVectorSum(this.vectorArray, vector.vectorArray);
+        }
 
-    public static Vector getVectorSum(double[] vector, double[] vector1) {
-        Vector vectorSum = new Vector(vector);
+        return getVectorSum(vector.vectorArray, this.vectorArray);
+    }
+
+    private static Vector getVectorSum(double[] vector, double[] vector1) {
+        Vector vectorSum = new Vector(vector.length);
+
+        for (int i = 0; i < vector.length; i++) {
+            vectorSum.vectorArray[i] += vector[i];
+        }
 
         for (int i = 0; i < vector1.length; i++) {
             vectorSum.vectorArray[i] += vector1[i];
@@ -70,12 +69,26 @@ public class Vector implements Cloneable {
         return vectorSum;
     }
 
-    public Vector vectorSum(Vector vector) {
-        if (this.vectorArray.length > vector.vectorArray.length) {
-            return getVectorSum(this.vectorArray, vectorArray);
+    public Vector vectorDifference(Vector vector) {
+        if (this.vectorArray.length < vector.vectorArray.length) {
+            return getVectorDifference(this.vectorArray, vector.vectorArray, vector.vectorArray.length);
         }
 
-        return getVectorSum(vector.vectorArray, this.vectorArray);
+        return getVectorDifference(this.vectorArray, vector.vectorArray, this.vectorArray.length);
+    }
+
+    public static Vector getVectorDifference(double[] vector1, double[] vector2, int length) {
+        Vector vectorDifference = new Vector(length);
+
+        for (int i = 0; i < vector1.length; i++) {
+            vectorDifference.vectorArray[i] += vector1[i];
+        }
+
+        for (int i = 0; i < vector2.length; i++) {
+            vectorDifference.vectorArray[i] -= vector2[i];
+        }
+
+        return vectorDifference;
     }
 
     public void vectorReturn() {
@@ -83,4 +96,6 @@ public class Vector implements Cloneable {
             this.vectorArray[i] = vectorArray[i] * (-1);
         }
     }
+
+    
 }
