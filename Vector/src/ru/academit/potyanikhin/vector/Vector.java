@@ -1,7 +1,5 @@
-package ru.academit.potyanikhin;
+package ru.academit.potyanikhin.vector;
 
-
-import java.util.Arrays;
 
 public class Vector implements Cloneable {
     // Поля
@@ -22,14 +20,13 @@ public class Vector implements Cloneable {
     public Vector(int n, double[] vectorArray) {
         this.vectorArray = new double[n];
 
-        for (int i = 0; i < vectorArray.length; i++) {
-            this.vectorArray[i] = vectorArray[i];
-        }
+        System.arraycopy(vectorArray, 0, this.vectorArray, 0, vectorArray.length);
     }
 
     // Конструктор копирования;
     public Vector(Vector vector) {
-        this(vector.getVectorArray().clone());
+        n = vector.n;
+        vectorArray = vector.vectorArray;
     }
 
     // Геттер массива компонент;
@@ -45,15 +42,23 @@ public class Vector implements Cloneable {
     // toString;
     @Override
     public String toString() {
-        return "Vector{" +
-                "n=" + n +
-                ", vectorArray=" + Arrays.toString(vectorArray) +
-                '}';
+        String string = "";
+        for (int i = 0; i < vectorArray.length; i++) {
+            string += vectorArray[i];
+
+            if (i == vectorArray.length - 1) {
+                break;
+            }
+
+            string += ", ";
+        }
+
+        return "{ " + string + " }";
     }
 
     // Метод для получения размерности вектора;
     public int getSize(Vector vector) {
-        return vector.vectorArray.length;
+        return vector.vectorArray.length + 1;
     }
 
     // Прибавление к вектору другого вектора;
@@ -65,6 +70,7 @@ public class Vector implements Cloneable {
             for (int i = 0; i < vector.vectorArray.length; i++) {
                 this.vectorArray[i] += vector.vectorArray[i];
             }
+
             return;
         }
 
@@ -82,6 +88,7 @@ public class Vector implements Cloneable {
             for (int i = 0; i < vector.vectorArray.length; i++) {
                 this.vectorArray[i] -= vector.vectorArray[i];
             }
+
             return;
         }
 
@@ -97,7 +104,7 @@ public class Vector implements Cloneable {
         }
     }
 
-    //Разворот вектора (умножение всех компонент на -1;
+    //Разворот вектора;
     public void vectorReturn() {
         for (int i = 0; i < this.vectorArray.length; i++) {
             this.vectorArray[i] *= (-1);
@@ -108,15 +115,15 @@ public class Vector implements Cloneable {
     public double getVectorLength() {
         double vectorLength = 0;
 
-        for (int i = 0; i < this.vectorArray.length; i++) {
-            vectorLength += this.vectorArray[i];
+        for (double i : this.vectorArray) {
+            vectorLength += i;
         }
 
         return Math.abs(vectorLength);
     }
 
     //Установка компоненты вектора по индексу;
-    public void componentInstallation(double component, int index) {
+    public void vectorComponentInstallation(double component, int index) {
         if (index > this.vectorArray.length) {
             return;
         }
@@ -125,9 +132,8 @@ public class Vector implements Cloneable {
     }
 
     //Получение компоненты вектора по индексу;
-    public double getComponent(int index) {
+    public double getVectorComponent(int index) {
         return this.vectorArray[index];
-
     }
 
     //Сложение двух векторов – должен создаваться новый вектор;
@@ -144,7 +150,6 @@ public class Vector implements Cloneable {
 
         return vectorSum;
     }
-
 
     //Вычитание векторов – должен создаваться новый вектор;
     public static Vector getVectorDifference(Vector vector1, Vector vector2) {
