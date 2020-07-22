@@ -10,8 +10,6 @@ public class Main {
         Vector vector1 = new Vector(3, array);
         Vector vector2 = new Vector(7, array2);
 
-
-
         vector2.vectorDifference(vector1);
         System.out.println(vector2);
 
