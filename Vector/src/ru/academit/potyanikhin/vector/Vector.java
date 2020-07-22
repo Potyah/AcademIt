@@ -42,23 +42,23 @@ public class Vector implements Cloneable {
     // toString;
     @Override
     public String toString() {
-        String string = "";
+        StringBuilder string = new StringBuilder();
         for (int i = 0; i < vectorArray.length; i++) {
-            string += vectorArray[i];
+            string.append(vectorArray[i]);
 
             if (i == vectorArray.length - 1) {
                 break;
             }
 
-            string += ", ";
+            string.append(", ");
         }
 
         return "{ " + string + " }";
     }
 
     // Метод для получения размерности вектора;
-    public int getSize(Vector vector) {
-        return vector.vectorArray.length + 1;
+    public int getSize() {
+        return vectorArray.length;
     }
 
     // Прибавление к вектору другого вектора;
@@ -74,7 +74,7 @@ public class Vector implements Cloneable {
             return;
         }
 
-        for (int i = 0; i < this.vectorArray.length; i++) {
+        for (int i = 0; i < vector.vectorArray.length; i++) {
             this.vectorArray[i] += vector.vectorArray[i];
         }
     }
@@ -92,7 +92,7 @@ public class Vector implements Cloneable {
             return;
         }
 
-        for (int i = 0; i < this.vectorArray.length; i++) {
+        for (int i = 0; i < vector.vectorArray.length; i++) {
             this.vectorArray[i] -= vector.vectorArray[i];
         }
     }
