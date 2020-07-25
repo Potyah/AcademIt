@@ -20,7 +20,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Shape[] shapeArray = new Shape[]{new Circle(6),
+        Shape[] shapeArray = {new Circle(6),
                 new Triangle(3, 5, 9, 7, 9, 10),
                 new Square(45),
                 new Rectangle(20, 60),

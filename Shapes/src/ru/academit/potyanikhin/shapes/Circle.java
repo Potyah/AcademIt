@@ -2,8 +2,9 @@ package ru.academit.potyanikhin.shapes;
 
 import ru.academit.potyanikhin.shape_interface.Shape;
 
+import java.util.Objects;
+
 public class Circle implements Shape {
-    private static final String name = "Круг";
     private double radius;
 
     public Circle(double radius) {
@@ -16,10 +17,6 @@ public class Circle implements Shape {
 
     public void setRadius(double radius) {
         this.radius = radius;
-    }
-
-    public String getName() {
-        return name;
     }
 
     @Override
@@ -44,6 +41,30 @@ public class Circle implements Shape {
 
     @Override
     public String toString() {
-        return name + " с радиусом " + radius;
+        return "Круг с радиусом " + radius;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || o.getClass() != getClass()) {
+            return false;
+        }
+
+        Circle circle = (Circle) o;
+        return circle.radius == radius;
+    }
+
+    @Override
+    public int hashCode() {
+        final int PRIME = 21;
+        int hash = 1;
+
+        hash = PRIME * hash + Double.hashCode(radius);
+
+        return hash;
     }
 }

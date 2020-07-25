@@ -2,8 +2,9 @@ package ru.academit.potyanikhin.shapes;
 
 import ru.academit.potyanikhin.shape_interface.Shape;
 
+import java.util.Objects;
+
 public class Rectangle implements Shape {
-    private static final String name = "Прямоугольник";
     private double width;
     private double height;
 
@@ -30,10 +31,6 @@ public class Rectangle implements Shape {
         this.height = height;
     }
 
-    public String getName() {
-        return name;
-    }
-
     @Override
     public double getArea() {
         return width * height;
@@ -46,6 +43,31 @@ public class Rectangle implements Shape {
 
     @Override
     public String toString() {
-        return name + " с шириной " + width + " и высотой " + height;
+        return "Прямоугольник с шириной " + width + " и высотой " + height;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (o == null || o.getClass() != getClass()) {
+            return false;
+        }
+
+        Rectangle rectangle = (Rectangle) o;
+        return rectangle.width == width && rectangle.height == height;
+    }
+
+    @Override
+    public int hashCode() {
+        final int PRIME = 21;
+        int hash = 1;
+
+        hash = PRIME * hash + Double.hashCode(width);
+        hash = PRIME * hash + Double.hashCode(height);
+
+        return hash;
     }
 }

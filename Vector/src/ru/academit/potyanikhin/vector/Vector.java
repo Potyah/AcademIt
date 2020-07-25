@@ -1,7 +1,7 @@
 package ru.academit.potyanikhin.vector;
 
 
-public class Vector implements Cloneable {
+public class Vector {
     // Поля
     private double[] vectorArray;
     private int n;

@@ -2,8 +2,9 @@ package ru.academit.potyanikhin.shapes;
 
 import ru.academit.potyanikhin.shape_interface.Shape;
 
+import java.util.Objects;
+
 public class Square implements Shape {
-    private static final String name = "Квадрат";
     private double sideLength;
 
     public Square(double sideLength) {
@@ -40,6 +41,30 @@ public class Square implements Shape {
 
     @Override
     public String toString() {
-        return name + " со стороной " + sideLength;
+        return "Квадрат со стороной " + sideLength;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (o == null || o.getClass() != getClass()) {
+            return false;
+        }
+
+        Square square = (Square) o;
+        return square.sideLength == sideLength;
+    }
+
+    @Override
+    public int hashCode() {
+        final int PRIME = 21;
+        int hash = 1;
+
+        hash = PRIME * hash + Double.hashCode(sideLength);
+
+        return hash;
     }
 }
