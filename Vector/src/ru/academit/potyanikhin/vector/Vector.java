@@ -1,6 +1,9 @@
 package ru.academit.potyanikhin.vector;
 
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public class Vector {
     // Поля
     private double[] vectorArray;
@@ -181,5 +184,32 @@ public class Vector {
         }
 
         return vector2;
+    }
+
+    // Equals
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Vector vector = (Vector) o;
+        return n == vector.n && vectorArray == vector.vectorArray;
+    }
+
+    //Hash Code
+    @Override
+    public int hashCode() {
+        final int PRIME = 21;
+        int hash = 1;
+
+        hash = PRIME * hash + n;
+        hash = 31 * hash + Arrays.hashCode(vectorArray);
+
+        return hash;
     }
 }
