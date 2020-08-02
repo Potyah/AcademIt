@@ -2,8 +2,6 @@ package ru.academit.potyanikhin.shapes;
 
 import ru.academit.potyanikhin.shape_interface.Shape;
 
-import java.util.Objects;
-
 public class Rectangle implements Shape {
     private double width;
     private double height;
@@ -62,11 +60,11 @@ public class Rectangle implements Shape {
 
     @Override
     public int hashCode() {
-        final int PRIME = 21;
+        final int prime = 37;
         int hash = 1;
 
-        hash = PRIME * hash + Double.hashCode(width);
-        hash = PRIME * hash + Double.hashCode(height);
+        hash = prime * hash + Double.hashCode(width);
+        hash = prime * hash + Double.hashCode(height);
 
         return hash;
     }

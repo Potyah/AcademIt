@@ -2,8 +2,6 @@ package ru.academit.potyanikhin.shapes;
 
 import ru.academit.potyanikhin.shape_interface.Shape;
 
-import java.util.Objects;
-
 public class Circle implements Shape {
     private double radius;
 
@@ -60,10 +58,10 @@ public class Circle implements Shape {
 
     @Override
     public int hashCode() {
-        final int PRIME = 21;
+        final int prime = 37;
         int hash = 1;
 
-        hash = PRIME * hash + Double.hashCode(radius);
+        hash = prime * hash + Double.hashCode(radius);
 
         return hash;
     }
