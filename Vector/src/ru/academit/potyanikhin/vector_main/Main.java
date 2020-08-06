@@ -9,20 +9,16 @@ public class Main {
 
         Vector vector1 = new Vector(array);
         Vector vector2 = new Vector(array2);
-
         Vector vector3 = new Vector(vector1);
 
-        vector3.vectorDifference(vector2);
+        Vector.getSum(vector1, vector2);
 
+        vector1.add(vector2);
+        System.out.println(Vector.getSum(vector1, vector2));
 
-        System.out.println(vector3);
+        System.out.println(vector3.getLength());
+
+        vector1.setComponent(99.99, 2);
         System.out.println(vector1);
-
-
-       // Vector vector3 = new Vector(vector1);
-      //  System.out.println(vector3.getVectorLength());
-
-   //     vector1.vectorComponentInstallation(99.99, 2);
-   //     System.out.println(vector1);
     }
 }
