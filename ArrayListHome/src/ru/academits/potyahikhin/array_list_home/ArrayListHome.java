@@ -18,7 +18,7 @@ public class ArrayListHome {
                 Collections.addAll(list, splitString);
             }
 
-     //       System.out.println(list);
+            System.out.println(list);
         }
 
         ArrayList<Integer> integersList = new ArrayList<>();
@@ -35,7 +35,7 @@ public class ArrayListHome {
             }
         }
 
-      //  System.out.println(integersList);
+        System.out.println(integersList);
 
         ArrayList<Integer> integersList2 = new ArrayList<>();
         integersList2.add(1);
@@ -46,10 +46,9 @@ public class ArrayListHome {
         integersList2.add(5);
 
         for (int i = 0; i < integersList2.size(); i++) {
-
-            for (int j = 1; i < integersList2.size() - 1; i++) {
-                if (integersList2.get(i).equals(integersList2.get(j + i))) {
-                    integersList2.remove(j + i);
+            for (int j = i + 1; j < integersList2.size(); j++) {
+                if (integersList2.get(i).equals(integersList2.get(j))) {
+                    integersList2.remove(j);
                 }
             }
         }
