@@ -9,16 +9,16 @@ import java.util.Scanner;
 public class ArrayListHome {
     public static void main(String[] args) throws FileNotFoundException {
         try (Scanner scanner = new Scanner(new FileInputStream("input.txt"), "windows-1251")) {
-            ArrayList<String> list = new ArrayList<>();
+            ArrayList<String> stringsList = new ArrayList<>();
 
             while (scanner.hasNextLine()) {
                 String string = scanner.nextLine();
-                String[] splitString = string.split(" ");
+                String[] splitStringArray = string.split(" ");
 
-                Collections.addAll(list, splitString);
+                Collections.addAll(stringsList, splitStringArray);
             }
 
-            System.out.println(list);
+            System.out.println(stringsList);
         }
 
         ArrayList<Integer> integersList = new ArrayList<>();
@@ -32,6 +32,8 @@ public class ArrayListHome {
         for (int i = 0; i < integersList.size(); i++) {
             if (integersList.get(i) % 2 == 0) {
                 integersList.remove(i);
+
+                i--;
             }
         }
 
@@ -49,6 +51,8 @@ public class ArrayListHome {
             for (int j = i + 1; j < integersList2.size(); j++) {
                 if (integersList2.get(i).equals(integersList2.get(j))) {
                     integersList2.remove(j);
+
+                    j--;
                 }
             }
         }
