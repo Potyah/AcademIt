@@ -3,7 +3,7 @@ package ru.academits.potyahikhin.array_list_home;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class ArrayListHome {
@@ -13,50 +13,39 @@ public class ArrayListHome {
 
             while (scanner.hasNextLine()) {
                 String string = scanner.nextLine();
-                String[] splitStringArray = string.split(" ");
 
-                Collections.addAll(stringsList, splitStringArray);
+                stringsList.add(string);
             }
 
             System.out.println(stringsList);
         }
 
-        ArrayList<Integer> integersList = new ArrayList<>();
-        integersList.add(1);
-        integersList.add(2);
-        integersList.add(3);
-        integersList.add(4);
-        integersList.add(5);
-        integersList.add(6);
+        ArrayList<Integer> integerNumbersList = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
 
-        for (int i = 0; i < integersList.size(); i++) {
-            if (integersList.get(i) % 2 == 0) {
-                integersList.remove(i);
+        for (int i = 0; i < integerNumbersList.size(); i++) {
+            if (integerNumbersList.get(i) % 2 == 0) {
+                integerNumbersList.remove(i);
 
                 i--;
             }
         }
 
-        System.out.println(integersList);
+        System.out.println(integerNumbersList);
 
-        ArrayList<Integer> integersList2 = new ArrayList<>();
-        integersList2.add(1);
-        integersList2.add(5);
-        integersList2.add(2);
-        integersList2.add(1);
-        integersList2.add(3);
-        integersList2.add(5);
+        ArrayList<Integer> integerNumbersListWithRecurrence = new ArrayList<>(Arrays.asList(1, 5, 2, 1, 3, 5));
+        ArrayList<Integer> integerNumberListWithoutRecurrence = new ArrayList<>();
 
-        for (int i = 0; i < integersList2.size(); i++) {
-            for (int j = i + 1; j < integersList2.size(); j++) {
-                if (integersList2.get(i).equals(integersList2.get(j))) {
-                    integersList2.remove(j);
+        for (Integer e : integerNumbersListWithRecurrence) {
+            int nextIndex = integerNumberListWithoutRecurrence.indexOf(e);
 
-                    j--;
-                }
+            if (nextIndex != -1) {
+                continue;
             }
+
+            integerNumberListWithoutRecurrence.add(e);
         }
 
-        System.out.println(integersList2);
+        System.out.println(integerNumbersListWithRecurrence);
+        System.out.println(integerNumberListWithoutRecurrence);
     }
 }
