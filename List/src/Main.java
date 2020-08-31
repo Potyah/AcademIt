@@ -9,19 +9,15 @@ public class Main {
         list.addFirst(0);
 
 
-        //SinglyLinkedList<Integer> list2 = new SinglyLinkedList<>();
-       // list2.copy(list);
-
-        System.out.println(345);
-
-        list.reverse();
+        SinglyLinkedList<Integer> list2 = new SinglyLinkedList<>();
+        list.copy(list2);
 
 
-        System.out.println(list.getDataOnIndex(0));
-        System.out.println(list.getDataOnIndex(1));
-        System.out.println(list.getDataOnIndex(2));
-        System.out.println(list.getDataOnIndex(3));
-        System.out.println(list.getDataOnIndex(4));
+        System.out.println(list2.getDataOnIndex(0));
+        System.out.println(list2.getDataOnIndex(1));
+        System.out.println(list2.getDataOnIndex(2));
+        System.out.println(list2.getDataOnIndex(3));
+        System.out.println(list2.getDataOnIndex(4));
 
 
     }

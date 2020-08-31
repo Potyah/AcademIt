@@ -18,6 +18,10 @@ public class SinglyLinkedList<T> {
 
     // Получение значения по указанному индексу.
     public T getDataOnIndex(int index) {
+        if (index > getSize()) {
+            throw new IllegalArgumentException("Индекс " + index  + " больше длинны списка");
+        }
+
         ListItem<T> p = head;
         for (int i = 0; i != index; i++) {
             p = p.getNext();
@@ -111,38 +115,41 @@ public class SinglyLinkedList<T> {
     public void reverse() {
         ListItem<T> previous = null;
         ListItem<T> current = head;
-        ListItem<T> next = head.getNext();
+        ListItem<T> forward;
 
-        while (next != null) {
+        while (current != null) {
+            forward = current.getNext();
+
             current.setNext(previous);
-            // currentNode ?.nextNode = previousNode
             previous = current;
+            head = current;
 
-            //    previousNode = currentNode
-
-            current = next;
-            //     currentNode = nextNode
-
-            current.setNext(next);
-            //      nextNode = currentNode ?.nextNode
+            current = forward;
         }
-        current.setNext(previous);
-        //     currentNode ?.nextNode = previousNode
-
-        head = current;
-        //     firstNode = currentNode
     }
 
+    // Копирование списка.
+    public void copy(SinglyLinkedList<T> original) {
+   /*     ListItem<T> copy = new SinglyLinkedList<>();
 
-/* Копирование списка.
-public void copy(SinglyLinkedList<T> sourceList){
-        SinglyLinkedList<T> list=new SinglyLinkedList<>();
+        LinkedListTest nextCopy = original.getNext();
+        LinkedListTest current = copy;
 
-        for(int i=0;i<sourceList.getSize();i++){
-        list.addFirst(sourceList.getDataOnIndex(count));
+        while (nextCopy != null) {
+
+            LinkedListTest newCopy = new LinkedListTest(nextCopy.getData() + " copied");
+            newCopy.setNext(nextCopy.getNext());
+
+            current.setNext(newCopy);
+
+            current = newCopy;
+            nextCopy = newCopy.getNext();
         }
-        } */
-        }
+
+        return copy;
+    } */
 
 
+    }
+}
 
