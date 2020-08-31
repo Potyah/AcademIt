@@ -39,8 +39,8 @@ public class Vector {
     public String toString() {
         StringBuilder string = new StringBuilder("{ ");
 
-        for (double vectorComponent : components) {
-            string.append(vectorComponent).append(", ");
+        for (double e : components) {
+            string.append(e).append(", ");
         }
 
         string.replace(string.length() - 2, string.length(), " }");
