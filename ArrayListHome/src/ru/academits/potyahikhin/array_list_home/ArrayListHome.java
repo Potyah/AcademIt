@@ -7,17 +7,18 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class ArrayListHome {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args)  {
         try (Scanner scanner = new Scanner(new FileInputStream("input.txt"), "windows-1251")) {
             ArrayList<String> stringsList = new ArrayList<>();
 
             while (scanner.hasNextLine()) {
                 String string = scanner.nextLine();
-
                 stringsList.add(string);
             }
 
             System.out.println(stringsList);
+        } catch (FileNotFoundException e) {
+            System.out.println("Ошибка. Файл не найден.");
         }
 
         ArrayList<Integer> integerNumbersList = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
