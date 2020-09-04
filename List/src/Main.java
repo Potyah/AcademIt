@@ -13,7 +13,7 @@ public class Main {
         list.copy(list2);
 
 
-        System.out.println(list2.getDataOnIndex(0));
+         System.out.println(list2.getDataOnIndex(0));
         System.out.println(list2.getDataOnIndex(1));
         System.out.println(list2.getDataOnIndex(2));
         System.out.println(list2.getDataOnIndex(3));
