@@ -4,37 +4,45 @@ import java.util.function.UnaryOperator;
 
 public class ArrayList<T> implements List<T> {
     private T[] items;
-    private int length;
+    private int size;
 
     public ArrayList() {
         this.items = (T[]) new Object[10];
     }
 
-    public ArrayList(int length, T[] items) {
-        this.length = length;
-        this.items = Arrays.copyOf(items, length);
+    public ArrayList(int size, T[] items) {
+        this.size = size;
+        this.items = Arrays.copyOf(items, size);
     }
 
     public ArrayList(T[] items) {
         this.items = items;
-        this.length = items.length;
+        this.size = items.length;
     }
 
-    public ArrayList(int length) {
-        this.length = length;
-        this.items = (T[]) new Object[length];
+    public ArrayList(int size) {
+        this.size = size;
+        this.items = (T[]) new Object[size];
+    }
+
+
+    public void trimToSize() {
+        if (size < items.length) {
+            items = Arrays.copyOf(items, size);
+        }
     }
 
 
     // Добавляет новый элемент в конец списка. Возвращает boolean-значение (true — успех, false — не добавлено)
     @Override
     public boolean add(T t) {
-        if (length >= items.length) {
+        if (size >= items.length) {
             increaseCapacity();
         }
 
-        items[length] = t;
-        ++length;
+        items[size] = t;
+        ++size;
+        trimToSize();
 
         return true;
     }
@@ -42,18 +50,19 @@ public class ArrayList<T> implements List<T> {
     //Добавляет элемент element в позицию index. При добавлении происходит сдвиг всех элементов справа от указанного индекса на 1 позицию вправо
     @Override
     public void add(int index, T element) {
-        if (index < 0 || index > length) {
+        if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException();
         }
 
-        if (length + 1 >= items.length) {
+        if (size + 1 >= items.length) {
             increaseCapacity();
         }
 
-        System.arraycopy(items, index, items, index + 1, length - index + 1);
+        System.arraycopy(items, index, items, index + 1, size - index + 1);
 
         items[index] = element;
-        ++length;
+        ++size;
+        trimToSize();
     }
 
 
@@ -62,8 +71,10 @@ public class ArrayList<T> implements List<T> {
     public boolean addAll(Collection<? extends T> c) {
         for (T element : c) {
             add(element);
-            ++length;
+            ++size;
         }
+
+        trimToSize();
 
         return true;
     }
@@ -73,18 +84,19 @@ public class ArrayList<T> implements List<T> {
     @Override
     public boolean addAll(int index, Collection<? extends T> c) {
 
-        if (length + c.size() + 1 >= items.length) {
+        if (size + c.size() + 1 >= items.length) {
             increaseCapacity();
         }
 
-        System.arraycopy(items, index, items, index + c.size(), length - index + 1 + c.size());
+        System.arraycopy(items, index, items, index + c.size(), size - index + 1 + c.size());
 
         for (T element : c) {
             items[index] = element;
             ++index;
         }
 
-        length += c.size();
+        size += c.size();
+        trimToSize();
 
         return true;
     }
@@ -94,20 +106,16 @@ public class ArrayList<T> implements List<T> {
     @Override
     public void clear() {
         items = (T[]) new Object[10];
-        length = 0;
+        size = 0;
     }
 
     //Проверка наличие объекта в списке, возвращает boolean-значение.
     @Override
     public boolean contains(Object o) {
-        try {
-            for (T element : items) {
-                if (element.equals(o)) {
-                    return true;
-                }
+        for (T e : items) {
+            if (o.equals(e)) {
+                return true;
             }
-        } catch (NullPointerException e) {
-            return false;
         }
 
         return false;
@@ -115,16 +123,12 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        try {
-            for (Object o : c) {
-                for (T e : items) {
-                    if (e.equals(o)) {
-                        break;
-                    }
+        for (Object o : c) {
+            for (T e : items) {
+                if (o.equals(e)) {
+                    break;
                 }
             }
-        } catch (NullPointerException e) {
-            return false;
         }
 
         return true;
@@ -140,7 +144,7 @@ public class ArrayList<T> implements List<T> {
     // Возвращает элемент, который расположен в указанной позиции списка.
     @Override
     public T get(int index) {
-        if (index < 0 || index > length) {
+        if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Индекс " + index + " выходит за границы коллекции");
         }
 
@@ -151,14 +155,14 @@ public class ArrayList<T> implements List<T> {
     // Метод возвращает индекс первого вхождения элемента в списке. Если элемента не существует в списке, метод вернет -1.
     @Override
     public int indexOf(Object o) {
-        try {
-            for (T e : items) {
-                if (e.equals(o)) {
-                    return 1;
-                }
+        int i = 0;
+
+        for (T e : items) {
+            if (o.equals(e)) {
+                return i;
             }
-        } catch (NullPointerException e) {
-            return -1;
+
+            i++;
         }
 
         return -1;
@@ -168,14 +172,14 @@ public class ArrayList<T> implements List<T> {
     // Метод возвращает true, если список пустой, false в обратном случае.
     @Override
     public boolean isEmpty() {
-        return length == 0;
+        return size == 0;
     }
 
     @Override
     public String toString() {
         return "ArrayList{" +
                 "items=" + Arrays.toString(items) +
-                '}' + "Длинна - " + length;
+                '}' + "Длинна - " + size;
     }
 
 
@@ -189,11 +193,11 @@ public class ArrayList<T> implements List<T> {
         private int currentIndex = -1;
 
         public boolean hasNext() {
-            return currentIndex + 1 < length;
+            return currentIndex + 1 < size;
         }
 
         public T next() {
-            if (currentIndex == length - 1) {
+            if (currentIndex == size - 1) {
                 throw new NoSuchElementException("Коллекция кончилась");
             }
 
@@ -212,22 +216,18 @@ public class ArrayList<T> implements List<T> {
     //возвращается индекс последнего элемента в списке. Если элемент не найден, также возвращает -1.
     @Override
     public int lastIndexOf(Object o) {
-        try {
-            int lastIndex = -1;
-            int i = 0;
+        int lastIndex = -1;
+        int i = 0;
 
-            for (T e : items) {
-                if (e.equals(o)) {
-                    lastIndex = i;
-                }
-
-                i++;
+        for (T e : items) {
+            if (o.equals(e)) {
+                lastIndex = i;
             }
-        } catch (NullPointerException e) {
-            return lastIndex;
+
+            i++;
         }
 
-        return -1;
+        return lastIndex;
     }
 
     //Удаление элемента в указанной позиции индекса. После удаления сдвигает все элементы влево для заполнения освободившегося пространства.
@@ -236,12 +236,13 @@ public class ArrayList<T> implements List<T> {
 
         T removedElement = items[index];
 
-        if (index < length - 1) {
-            System.arraycopy(items, index + 1, items, index, length - index - 1);
+        if (index < size - 1) {
+            System.arraycopy(items, index + 1, items, index, size - index - 1);
         }
 
-        items[length - 1] = null;
-        --length;
+        items[size - 1] = null;
+        --size;
+        trimToSize();
 
         return removedElement;
     }
@@ -250,13 +251,40 @@ public class ArrayList<T> implements List<T> {
 // Если элемент существует в списке и успешно удален, метод возвращает true, в обратном случае — false.
     @Override
     public boolean remove(Object o) {
+        int i = 0;
+
+        for (T e : items) {
+            if (o.equals(e)) {
+                remove(i);
+                return true;
+            }
+
+            ++i;
+        }
+
         return false;
     }
 
     // Метод принимает коллекцию элементов, которая будет удалена из списка.
     @Override
     public boolean removeAll(Collection<?> c) {
-        return false;
+        boolean isRemoved = false;
+        int i;
+
+        for (Object o : c) {
+            i = 0;
+
+            for (T e : items) {
+                if (o.equals(e)) {
+                    remove(i);
+                    isRemoved = true;
+                }
+
+                i++;
+            }
+        }
+
+        return isRemoved;
     }
 
     // Замена элемента в указанной позиции index на переданный element.
@@ -270,7 +298,7 @@ public class ArrayList<T> implements List<T> {
     //узнать размер массива.
     @Override
     public int size() {
-        return length;
+        return size;
     }
 
     //Превращает список в фиксированный массив. Обратите внимание, что метод возвращает массив объектов (Object[]).
@@ -278,33 +306,39 @@ public class ArrayList<T> implements List<T> {
     // в качестве параметра в метод можно передать массив, куда будут перемещены элементы списков.
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        return Arrays.copyOf(items, size);
     }
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
-        return null;
+
+        if (size > a.length) {
+            return (T1[]) Arrays.copyOf(items, size);
+        } else {
+
+            return (T1[]) Arrays.copyOf(items, a.length);
+        }
     }
 
 
-
-
-
-
-    @Override
-    public ListIterator<T> listIterator() {
-        return null;
-    }
-
-
-
-
-
-    
     @Override
     public boolean retainAll(Collection<?> c) {
-        return false;
+        boolean isRetain = true;
+
+        for (Object o : c) {
+            for (T e : items) {
+                if (o.equals(e)) {
+                    isRetain = false;
+                    continue;
+                }
+
+                remove(e);
+            }
+        }
+
+        return true;
     }
+
 
     @Override
     public void replaceAll(UnaryOperator<T> operator) {
@@ -316,11 +350,17 @@ public class ArrayList<T> implements List<T> {
 
     }
 
+    @Override
+    public ListIterator<T> listIterator() {
+        return null;
+    }
+
 
     @Override
     public ListIterator<T> listIterator(int index) {
         return null;
     }
+
 
     @Override
     public List<T> subList(int fromIndex, int toIndex) {
@@ -331,96 +371,4 @@ public class ArrayList<T> implements List<T> {
     public Spliterator<T> spliterator() {
         return null;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*
-    //Получить значение.
-    public T get(int index) {
-        if (index > size()) {
-            throw new IllegalArgumentException("Индекс " + index + " больше длинны списка");
-        }
-
-        return items[index];
-    }
-
-    public void set(int index, T element) {
-        if (index > size()) {
-            throw new IllegalArgumentException("Индекс " + index + " больше длинны списка");
-        }
-
-        items[index] = element;
-    }
-
-    public void add(T element) {
-        if (length >= items.length) {
-            increaseCapacity();
-        }
-
-        items[length] = element;
-        ++length;
-    }
-
-    public void increaseCapacity() throws RuntimeException {
-        items = Arrays.copyOf(items, size() * 2);
-    }
-
-    public class MyArray {
-        public void remove(int index) {
-            if (index > size()) {
-                throw new IllegalArgumentException("Индекс " + index + " больше длинны списка");
-            }
-
-            if (index < length - 1) {
-                System.arraycopy(items, index + 1,
-                        items, index, length - index - 1);
-            }
-
-            items[length - 1] = null;
-            --length;
-        }
-    }
-
-    public int size() {
-        return length;
-    }
-
-    public boolean isEmpty() {
-        return length == 0;
-    } */
-
-
 }

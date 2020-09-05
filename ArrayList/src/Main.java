@@ -3,8 +3,7 @@ public class Main {
         ArrayList<String> lines = new ArrayList<>();
         lines.add("111");
         lines.add("222");
-        lines.add("333");
-        lines.add("444");
+        lines.add("777");
         lines.add("555");
         lines.add("666");
         lines.add("777");
@@ -19,10 +18,14 @@ public class Main {
 
 
 
+        lines.retainAll(lines);
 
 
 
-        System.out.println(lines.containsAll(lines2));
+
+
+
+        System.out.println(lines);
 
 
 
