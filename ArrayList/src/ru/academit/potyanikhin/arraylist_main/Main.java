@@ -1,3 +1,7 @@
+package ru.academit.potyanikhin.arraylist_main;
+
+import ru.academit.potyanikhin.arraylist.ArrayList;
+
 public class Main {
     public static void main(String[] args) {
         ArrayList<String> lines = new ArrayList<>();
@@ -8,27 +12,12 @@ public class Main {
         lines.add("666");
         lines.add("777");
 
-
-
-
         ArrayList<String> lines2 = new ArrayList<>();
-        lines2.add("4");
-        lines2.add("111");
-        lines2.add("222");
+        lines2.add("666");
+        lines2.add("777");
 
-
-
-        lines.retainAll(lines);
-
-
-
-
-
+        lines.retainAll(lines2);
 
         System.out.println(lines);
-
-
-
-
     }
 }
