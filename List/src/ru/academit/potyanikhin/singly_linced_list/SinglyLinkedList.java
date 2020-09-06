@@ -1,28 +1,29 @@
+package ru.academit.potyanikhin.singly_linced_list;
+
+import ru.academit.potyanikhin.singly_linced_list_item.ListItem;
+
 public class SinglyLinkedList<T> {
     private ListItem<T> head;
-    private int count;
+    private int size;
 
     // Получение размера списка.
     public int getSize() {
-        for (ListItem<T> p = head; p != null; p = p.getNext()) {
-            count++;
-        }
-
-        return count;
+        return size;
     }
 
     // Получение значение первого элемента.
-    public T getFirstElementData() {
+    public T getData() {
         return head.getData();
     }
 
     // Получение значения по указанному индексу.
-    public T getDataOnIndex(int index) {
-        if (index > getSize()) {
-            throw new IllegalArgumentException("Индекс " + index  + " больше длинны списка");
+    public T getData(int index) {
+        if (index < 0 || index > getSize()) {
+            throw new IndexOutOfBoundsException("Index " + index + " is out of range");
         }
 
         ListItem<T> p = head;
+
         for (int i = 0; i != index; i++) {
             p = p.getNext();
         }
@@ -31,7 +32,11 @@ public class SinglyLinkedList<T> {
     }
 
     // Изменение значения по указанному индексу, пусть выдает старое значение.
-    public T setByIndex(int index, T data) {
+    public T seData(int index, T data) {
+        if (index < 0 || index > getSize()) {
+            throw new IndexOutOfBoundsException("Index " + index + " is out of range");
+        }
+
         ListItem<T> p;
 
         for (p = head; index != 0; p = p.getNext()) {
@@ -45,7 +50,11 @@ public class SinglyLinkedList<T> {
     }
 
     // Удаление элемента по индексу, пусть выдает значение элемента.
-    public T removeByIndex(int index) {
+    public T remove(int index) {
+        if (index < 0 || index > getSize()) {
+            throw new IndexOutOfBoundsException("Index " + index + " is out of range");
+        }
+
         ListItem<T> p;
         ListItem<T> previous;
 
@@ -56,22 +65,29 @@ public class SinglyLinkedList<T> {
         T removedElementData = p.getData();
 
         if (previous == null) {
-            return removeFirstElement();
+            return remove();
         }
 
         previous.setNext(p.getNext());
+
+        --size;
 
         return removedElementData;
     }
 
     // Вставка элемента в начало.
-    public void addFirst(T data) {
-        ListItem<T> p = new ListItem<>(data, head);
-        head = p;
+    public void add(T data) {
+        head = new ListItem<>(data, head);
+
+        ++size;
     }
 
     // Вставка элемента по индексу.
-    public void addByIndex(T data, int index) {
+    public void add(T data, int index) {
+        if (index < 0 || index > getSize()) {
+            throw new IndexOutOfBoundsException("Index " + index + " is out of range");
+        }
+
         ListItem<T> p;
 
         for (p = head; index != 1; p = p.getNext()) {
@@ -80,33 +96,41 @@ public class SinglyLinkedList<T> {
 
         ListItem<T> q = new ListItem<>(data, p.getNext());
         p.setNext(q);
+
+        ++size;
     }
 
     // Удаление узла по значению, пусть выдает true, если элемент был удален.
-    public boolean isRemoveByData(T data) {
-        boolean isEqualsData = false;
-
+    public boolean isRemove(T data) {
         for (ListItem<T> p = head, prev = null; p != null; prev = p, p = p.getNext()) {
             if (p.getData().equals(data)) {
                 if (prev == null) {
-                    removeFirstElement();
+                    remove();
+
+                    return true;
                 } else if (p.getNext() == null) {
                     prev.setNext(null);
+
+                    return true;
                 } else {
                     prev.setNext(p.getNext());
-                }
 
-                isEqualsData = true;
+                    --size;
+
+                    return true;
+                }
             }
         }
 
-        return isEqualsData;
+        return false;
     }
 
     // Удаление первого элемента, пусть выдает значение элемента.
-    public T removeFirstElement() {
-        T removedData = getFirstElementData();
+    public T remove() {
+        T removedData = getData();
         head = head.getNext();
+
+        --size;
 
         return removedData;
     }
@@ -129,27 +153,17 @@ public class SinglyLinkedList<T> {
     }
 
     // Копирование списка.
-    public void copy(SinglyLinkedList<T> original) {
-   /*     ListItem<T> copy = new SinglyLinkedList<>();
-
-        LinkedListTest nextCopy = original.getNext();
-        LinkedListTest current = copy;
-
-        while (nextCopy != null) {
-
-            LinkedListTest newCopy = new LinkedListTest(nextCopy.getData() + " copied");
-            newCopy.setNext(nextCopy.getNext());
-
-            current.setNext(newCopy);
-
-            current = newCopy;
-            nextCopy = newCopy.getNext();
+    public void copy(SinglyLinkedList<T> list) {
+        if (list == null) {
+            throw new NullPointerException("The specified collection is null");
         }
 
-        return copy;
-    } */
+        ListItem<T> copy = head;
+        size = list.getSize();
 
-
+        for (ListItem<T> p = list.head; p != null; p = p.getNext(), copy = copy.getNext()) {
+            copy.setData(p.getData());
+            copy.setNext(p.getNext());
+        }
     }
 }
-
