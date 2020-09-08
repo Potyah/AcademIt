@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class ArrayListHome {
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
         try (Scanner scanner = new Scanner(new FileInputStream("input.txt"), "windows-1251")) {
             ArrayList<String> stringsList = new ArrayList<>();
 
@@ -37,13 +37,10 @@ public class ArrayListHome {
         ArrayList<Integer> integerNumberListWithoutRecurrence = new ArrayList<>();
 
         for (Integer e : integerNumbersListWithRecurrence) {
-            int nextIndex = integerNumberListWithoutRecurrence.indexOf(e);
 
-            if (nextIndex != -1) {
-                continue;
+            if (!integerNumberListWithoutRecurrence.contains(e)) {
+                integerNumberListWithoutRecurrence.add(e);
             }
-
-            integerNumberListWithoutRecurrence.add(e);
         }
 
         System.out.println(integerNumbersListWithRecurrence);
