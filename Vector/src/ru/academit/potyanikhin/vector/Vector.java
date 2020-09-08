@@ -7,45 +7,49 @@ public class Vector {
     private double[] components;
 
     // Конструктор с нулевыми компонентами;
-    public Vector(int length) {
-        if (length <= 0) {
-            throw new IllegalArgumentException("Длинна вектора равна " + length + ". Значение должно быть больше нуля");
+    public Vector(int size) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("Длинна вектора равна " + size + ". Значение должно быть больше нуля");
         }
 
-        components = new double[length];
+        components = new double[size];
     }
 
     // Заполнение вектора значениями из массива;
     public Vector(double[] components) {
+        if (components.length == 0) {
+            throw new IllegalArgumentException("Длинна массива равна " + components.length + ". Значение должно быть больше нуля");
+        }
+
         this.components = Arrays.copyOf(components, components.length);
     }
 
     // Заполнение вектора значениями из массива. Если длина массива меньше n, то считать что в остальных компонентах 0;
-    public Vector(int length, double[] components) {
-        if (length <= 0) {
-            throw new IllegalArgumentException("Длинна вектора равна " + length + ". Значение должно быть больше нуля");
+    public Vector(int size, double[] components) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("Длинна вектора равна " + size + ". Значение должно быть больше нуля");
         }
 
-        this.components = Arrays.copyOf(components, length);
+        this.components = Arrays.copyOf(components, size);
     }
 
     // Конструктор копирования;
     public Vector(Vector vector) {
-        this.components = Arrays.copyOf(vector.components, vector.components.length);
+        components = Arrays.copyOf(vector.components, vector.components.length);
     }
 
     // toString;
     @Override
     public String toString() {
-        StringBuilder string = new StringBuilder("{ ");
+        StringBuilder stringBuilder = new StringBuilder("{ ");
 
         for (double e : components) {
-            string.append(e).append(", ");
+            stringBuilder.append(e).append(", ");
         }
 
-        string.replace(string.length() - 2, string.length(), " }");
+        stringBuilder.replace(stringBuilder.length() - 2, stringBuilder.length(), " }");
 
-        return String.valueOf(string);
+        return stringBuilder.toString();
     }
 
     // Метод для получения размерности вектора;
@@ -98,37 +102,38 @@ public class Vector {
         return Math.sqrt(componentsPowSum);
     }
 
-    //Установка компоненты вектора по индексу;
-    public void setComponent(int index, double component) {
-        components[index] = component;
-    }
-
     //Получение компоненты вектора по индексу;
     public double getComponent(int index) {
         return components[index];
     }
 
+    //Установка компоненты вектора по индексу;
+    public void setComponent(int index, double component) {
+        components[index] = component;
+    }
+
     //Сложение двух векторов – должен создаваться новый вектор;
     public static Vector getSum(Vector vector1, Vector vector2) {
-        Vector vectorSum = new Vector(vector1);
-        vectorSum.add(vector2);
+        Vector vectorsSum = new Vector(vector1);
+        vectorsSum.add(vector2);
 
-        return vectorSum;
+        return vectorsSum;
     }
 
     //Вычитание векторов – должен создаваться новый вектор;
     public static Vector getDifference(Vector vector1, Vector vector2) {
-        Vector vectorDifference = new Vector(vector1);
-        vectorDifference.subtract(vector2);
+        Vector vectorsDifference = new Vector(vector1);
+        vectorsDifference.subtract(vector2);
 
-        return vectorDifference;
+        return vectorsDifference;
     }
 
     // Скалярное произведение векторов;
     public static double getScalarProduct(Vector vector1, Vector vector2) {
         double scalarProduct = 0;
+        int minLength = Math.min(vector1.components.length, vector2.components.length);
 
-        for (int i = 0; i < Math.min(vector1.components.length, vector2.components.length); i++) {
+        for (int i = 0; i < minLength; i++) {
             scalarProduct += vector1.components[i] * vector2.components[i];
         }
 
