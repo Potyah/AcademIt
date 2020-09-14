@@ -1,4 +1,4 @@
-package ru.atademit.potyanikhin.lambda_powflow;
+package ru.atademit.potyanikhin.lambda_pow_flow;
 
 import java.util.Scanner;
 import java.util.stream.IntStream;
