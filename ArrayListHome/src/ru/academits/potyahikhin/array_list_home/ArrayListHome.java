@@ -37,7 +37,6 @@ public class ArrayListHome {
         ArrayList<Integer> integerNumberListWithoutRecurrence = new ArrayList<>();
 
         for (Integer e : integerNumbersListWithRecurrence) {
-
             if (!integerNumberListWithoutRecurrence.contains(e)) {
                 integerNumberListWithoutRecurrence.add(e);
             }
