@@ -213,7 +213,7 @@ public class ArrayList<T> implements List<T> {
                 throw new ConcurrentModificationException("The collection element is changed");
             }
 
-            if (currentIndex == size - 1) {
+            if (hasNext()) {
                 throw new NoSuchElementException("The collection element is ended");
             }
 
