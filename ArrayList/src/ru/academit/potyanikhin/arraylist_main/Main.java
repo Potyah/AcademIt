@@ -2,6 +2,8 @@ package ru.academit.potyanikhin.arraylist_main;
 
 import ru.academit.potyanikhin.arraylist.ArrayList;
 
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) {
         ArrayList<String> lines = new ArrayList<>(5);
@@ -11,7 +13,7 @@ public class Main {
         lines.add("555");
         lines.add("666");
         lines.add("777");
-        lines.add(6,"0000");
+        lines.add(6, "0000");
 
         System.out.println(lines);
 
@@ -19,20 +21,11 @@ public class Main {
         lines2.add("000776700");
         lines2.add("700000077");
 
+        lines.addAll(7, lines2);
 
-      //  lines.addAll(7, lines2);
-        System.out.println(lines);
-        System.out.println(lines.removeAll(lines2));
-        System.out.println(lines);
+        String[] array = new String[11];
+        lines.toArray(array);
 
-
-  //      ArrayList<String> lines3 = new ArrayList<>(0);
-
-  //      lines.retainAll(lines2);
-
-    //    System.out.println(lines3);
-  //      lines3.add("111");
-
- //       System.out.println(lines3);
+        System.out.println(Arrays.toString(lines.toArray(array)));
     }
 }

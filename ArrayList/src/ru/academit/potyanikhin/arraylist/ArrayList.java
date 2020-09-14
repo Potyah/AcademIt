@@ -40,7 +40,9 @@ public class ArrayList<T> implements List<T> {
 
     // Увеличивает размер внутреннего массива, чтобы в него поместилось количество элементов, переданных в minCapacity;
     public void ensureCapacity(int minCapacity) {
-        this.items = Arrays.copyOf(items, minCapacity);
+        if (minCapacity > items.length) {
+            items = Arrays.copyOf(items, minCapacity);
+        }
     }
 
     // Добавляет новый элемент в конец списка. Возвращает boolean-значение;
@@ -125,6 +127,7 @@ public class ArrayList<T> implements List<T> {
     @SuppressWarnings("unchecked")
     public void clear() {
         items = (T[]) new Object[size];
+        size = 0;
 
         ++modCount;
     }
@@ -180,8 +183,15 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public String toString() {
-        return "{" + Arrays.toString(items) +
-                '}' + " Длинна - " + size;
+        StringBuilder stringBuilder = new StringBuilder("{ ");
+
+        for (T e : items) {
+            stringBuilder.append(e).append(", ");
+        }
+
+        stringBuilder.replace(stringBuilder.length() - 2, stringBuilder.length(), " }");
+
+        return stringBuilder.toString();
     }
 
     // Возвращает итератор для списка для последующего использования в цикле или при любой другой обработке.
@@ -249,10 +259,10 @@ public class ArrayList<T> implements List<T> {
 // Если элемент существует в списке и успешно удален, метод возвращает true, в обратном случае — false.
     @Override
     public boolean remove(Object o) {
-        if (indexOf(o) != -1) {
-            remove(indexOf(o));
+        int index = indexOf(o);
 
-            ++modCount;
+        if (index != -1) {
+            remove(index);
 
             return true;
         }
@@ -267,6 +277,15 @@ public class ArrayList<T> implements List<T> {
             throw new NullPointerException("The specified collection is null");
         }
 
+        for (int i = 0; i < size; i++) {
+            if (c.contains(items[i])) {
+                break;
+            }
+
+            if (i + 1 == size) {
+                return false;
+            }
+        }
 
         for (Object o : c) {
             remove(o);
@@ -309,42 +328,29 @@ public class ArrayList<T> implements List<T> {
         }
 
         if (size > a.length) {
-            return (T1[]) Arrays.copyOf( a, a.length, this);
+            return (T1[]) Arrays.copyOf(items, a.length, a.getClass());
         }
 
-            return (T1[]) Arrays.copyOf(items, a.length);
-        }
-
-//        if (a.length < size)
-        //          a = (T[]) Array.newInstance(a.getClass().getComponentType(), size);
-//             else if (a.length > size)
-//                   a[size] = null;
-//             System.arraycopy(data, 0, a, 0, size);
-//             return a;
-
-
+        return (T1[]) Arrays.copyOf(items, a.length);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public boolean retainAll(Collection<?> c) {
         if (c == null) {
             throw new NullPointerException("The specified collection is null");
         }
 
-        ArrayList<T> temp = new ArrayList<>();
+        boolean result = false;
 
         for (T e : items) {
-            for (Object o : c) {
-                if (Objects.equals(o, e))
-                    temp.add(e);
+            if (!c.contains(e)) {
+                remove(e);
+
+                result = true;
             }
         }
 
-        items = (T[]) temp.toArray();
-        size = temp.size;
-
-        return true;
+        return result;
     }
 
     @Override
