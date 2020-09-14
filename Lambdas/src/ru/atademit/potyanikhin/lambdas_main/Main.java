@@ -1,6 +1,6 @@
-package ru.atademit.potyanikhin.lambda_main;
+package ru.atademit.potyanikhin.lambdas_main;
 
-import ru.atademit.potyanikhin.lambda_persons.Person;
+import ru.atademit.potyanikhin.lambdas_persons.Person;
 
 import java.util.*;
 import java.util.stream.Collectors;

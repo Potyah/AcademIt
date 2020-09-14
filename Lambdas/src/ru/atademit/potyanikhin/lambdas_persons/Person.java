@@ -1,4 +1,4 @@
-package ru.atademit.potyanikhin.lambda_persons;
+package ru.atademit.potyanikhin.lambdas_persons;
 
 public class Person {
     private final String name;

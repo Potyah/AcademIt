@@ -1,4 +1,4 @@
-package ru.atademit.potyanikhin.lambda_endless_stream;
+package ru.atademit.potyanikhin.lambdas_endless_stream;
 
 import java.util.Scanner;
 import java.util.stream.IntStream;
