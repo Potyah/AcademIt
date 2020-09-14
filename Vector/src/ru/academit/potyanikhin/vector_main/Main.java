@@ -11,10 +11,7 @@ public class Main {
         Vector vector2 = new Vector(array2);
         Vector vector3 = new Vector(vector1);
 
-        Vector.getSum(vector1, vector2);
-        vector1.add(vector2);
 
-        System.out.println(Vector.getSum(vector1, vector2));
         System.out.println(vector3.getLength());
     }
 }
