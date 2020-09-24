@@ -1,6 +1,6 @@
-package ru.academit.potyanikhin.singly_linced_list_item;
+package ru.academit.potyanikhin.singly_linked_list;
 
-public class ListItem<T> {
+class ListItem<T> {
     private T data;
     private ListItem<T> next;
 
