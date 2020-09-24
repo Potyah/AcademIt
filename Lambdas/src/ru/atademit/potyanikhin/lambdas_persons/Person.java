@@ -4,6 +4,11 @@ public class Person {
     private final String name;
     private int age;
 
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
     public String getName() {
         return name;
     }
@@ -16,8 +21,8 @@ public class Person {
         this.age = age;
     }
 
-    public Person(String name, int age) {
-        this.name = name;
-        this.age = age;
+    @Override
+    public String toString() {
+        return "[Имя: " + name + ", возраст: " + age + "]";
     }
 }
