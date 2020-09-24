@@ -1,14 +1,53 @@
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Spliterator;
+import java.util.*;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-public class HashTable implements Collection<T> {
+public class HashTable<T> implements Collection<T> {
+    private int index;
+    private int[] array;
+
+
+    public HashTable() {
+        array = new int[100];
+    }
+
+    public HashTable(int size) {
+        array = new int[size];
+    }
+
+
+    public int getIndex(Object o) {
+        return Math.abs(hashCode() % array.length);
+    }
+
+
+    public int hashCode() {
+
+        final int prime = 37;
+        int hash = 1;
+
+        hash = prime * hash;
+        hash = prime * hash + Arrays.hashCode(array);
+
+
+        return hash;
+    }
+
+    public int hashCode(Collection<? extends T> c) {
+        int hash = 0;
+
+        for (Object o : c) {
+            hash += o.hashCode();
+        }
+
+        return hash;
+    }
+
+
     @Override
     public int size() {
-        return 0;
+        return array.length;
     }
 
     @Override
@@ -22,13 +61,14 @@ public class HashTable implements Collection<T> {
     }
 
     @Override
+
     public Iterator<T> iterator() {
         return null;
     }
 
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        return null;
     }
 
     @Override
@@ -95,4 +135,6 @@ public class HashTable implements Collection<T> {
     public Stream<T> parallelStream() {
         return null;
     }
+
+
 }
