@@ -6,26 +6,20 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<String> lines = new ArrayList<>(5);
-        lines.add("111");
-        lines.add("222");
-        lines.add("777");
-        lines.add("555");
-        lines.add("666");
-        lines.add("777");
-        lines.add(6, "0000");
+        ArrayList<Integer> lines1 = new ArrayList<>(6);
+        lines1.add(111);
+        lines1.add(77);
+        lines1.add(66);
+        lines1.add(3, 7565);
 
-        System.out.println(lines);
+        System.out.println(lines1);
 
-        ArrayList<String> lines2 = new ArrayList<>();
-        lines2.add("000776700");
-        lines2.add("700000077");
+        ArrayList<Integer> lines2 = new ArrayList<>(Arrays.asList(111, 11, 666, 444, 222));
+        System.out.println(lines2);
 
-        lines.addAll(7, lines2);
+        ArrayList<Integer> lines3 = new ArrayList<>(lines1);
+        System.out.println(lines3);
 
-        String[] array = new String[11];
-        lines.toArray(array);
-
-        System.out.println(Arrays.toString(lines.toArray(array)));
+        System.out.println(lines1.size());
     }
 }
