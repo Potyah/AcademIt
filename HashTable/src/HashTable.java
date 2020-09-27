@@ -1,74 +1,90 @@
 import java.util.*;
-import java.util.function.IntFunction;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 public class HashTable<T> implements Collection<T> {
-    private int index;
-    private int[] array;
-
+    private final int size;
+    private final ArrayList<T>[] array;
 
     public HashTable() {
-        array = new int[100];
+        array = new ArrayList[10];
+        size = 10;
     }
 
     public HashTable(int size) {
-        array = new int[size];
+        array = new ArrayList[size];
+        this.size = size;
     }
 
+    public ArrayList<T> getHashList(int index) {
+        return array[index];
+    }
 
     public int getIndex(Object o) {
-        return Math.abs(hashCode() % array.length);
+        return Math.abs(hashCode(o) % array.length);
     }
 
-
-    public int hashCode() {
-
+    public int hashCode(Object o) {
         final int prime = 37;
-        int hash = 1;
-
-        hash = prime * hash;
-        hash = prime * hash + Arrays.hashCode(array);
-
-
-        return hash;
+        return prime + Objects.hashCode(o);
     }
-
-    public int hashCode(Collection<? extends T> c) {
-        int hash = 0;
-
-        for (Object o : c) {
-            hash += o.hashCode();
-        }
-
-        return hash;
-    }
-
 
     @Override
     public int size() {
-        return array.length;
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        for (int i = 0; i < size; i++) {
+            if (array[i] != null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override
     public boolean contains(Object o) {
-        return false;
+        int index = getIndex(o);
+
+        return getHashList(index).contains(o);
     }
 
     @Override
-
     public Iterator<T> iterator() {
-        return null;
+        return new MyListIterator();
+    }
+
+    private class MyListIterator implements Iterator<T> {
+        private int arrayIndex = 0;
+        private int collectionIndex = -1;
+
+        public boolean hasNext() {
+            return arrayIndex + 1 < size;
+        }
+
+        public T next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException("The collection element is ended");
+            }
+
+            while ((getHashList(arrayIndex) == null) || (getHashList(arrayIndex).size() <= collectionIndex + 1)) {
+                ++arrayIndex;
+                collectionIndex = -1;
+            }
+
+            ++collectionIndex;
+
+            return getHashList(arrayIndex).get(collectionIndex);
+        }
     }
 
     @Override
     public Object[] toArray() {
-        return null;
+        //    Object newArray = new Object[];
+
+
+        return Arrays.copyOf(array, size);
     }
 
     @Override
@@ -76,65 +92,109 @@ public class HashTable<T> implements Collection<T> {
         return null;
     }
 
-    @Override
-    public <T1> T1[] toArray(IntFunction<T1[]> generator) {
-        return null;
-    }
 
     @Override
     public boolean add(T t) {
-        return false;
+        int index = getIndex(t);
+
+        if (array[index] == null) {
+            array[index] = new ArrayList<>();
+        }
+
+        getHashList(index).add(t);
+
+        return true;
+
     }
 
     @Override
     public boolean remove(Object o) {
-        return false;
+        int index = getIndex(o);
+
+        return getHashList(index).remove(o);
     }
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        return false;
+        if (c == null) {
+            throw new NullPointerException("The specified collection is null");
+        }
+
+        for (Object o : c) {
+            if (!contains(o)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        return false;
+        if (c == null) {
+            throw new NullPointerException("The specified collection is null");
+        }
+
+        for (T t : c) {
+            add(t);
+        }
+
+        return true;
     }
+
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        return false;
+        if (c == null) {
+            throw new NullPointerException("The specified collection is null");
+        }
+
+        boolean result = true;
+
+        for (Object o : c) {
+            if (!contains(o)) {
+                result = false;
+                break;
+            }
+
+            remove(o);
+        }
+
+        return result;
     }
 
-    @Override
-    public boolean removeIf(Predicate<? super T> filter) {
-        return false;
-    }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        return false;
+        if (c == null) {
+            throw new NullPointerException("The specified collection is null");
+        }
+
+        boolean result = false;
+
+        for (T t : this) {
+            if (!c.contains(t)) {
+                remove(t);
+                result = true;
+            }
+        }
+
+        return result;
     }
 
     @Override
     public void clear() {
-
+        for (ArrayList<T> e : array) {
+            if (e != null) {
+                e = null;
+            }
+        }
     }
 
     @Override
-    public Spliterator<T> spliterator() {
-        return null;
+    public String toString() {
+        return "HashTable{" +
+                "size=" + size +
+                ", array=" + Arrays.toString(array) + '}';
     }
-
-    @Override
-    public Stream<T> stream() {
-        return null;
-    }
-
-    @Override
-    public Stream<T> parallelStream() {
-        return null;
-    }
-
-
 }
