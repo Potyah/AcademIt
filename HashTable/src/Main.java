@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
         ArrayList<Integer> list = new ArrayList<>(Arrays.asList(4, 55));
 
-        HashTable<Integer> hashTable = new HashTable<>(35);
+        HashTable<Integer> hashTable = new HashTable<>(10);
 
         hashTable.add(4);
         hashTable.add(56);

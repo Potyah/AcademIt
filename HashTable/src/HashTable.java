@@ -15,6 +15,10 @@ public class HashTable<T> implements Collection<T> {
     }
 
     public ArrayList<T> getHashList(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("index " + index + " is out of range. Length is " + size);
+        }
+
         return array[index];
     }
 
@@ -71,6 +75,10 @@ public class HashTable<T> implements Collection<T> {
             while ((getHashList(arrayIndex) == null) || (getHashList(arrayIndex).size() <= collectionIndex + 1)) {
                 ++arrayIndex;
                 collectionIndex = -1;
+
+                if (arrayIndex > size) {
+                    return null;
+                }
             }
 
             ++collectionIndex;
