@@ -1,14 +1,14 @@
 package ru.academit.potyanikhin;
 
 public class Model {
-    private double enteredTemperature;
+    private double inputData;
 
     public double getEnteredTemperature() {
-        return enteredTemperature;
+        return inputData;
     }
 
     public void setEnteredTemperature(double enteredTemperature) {
-        this.enteredTemperature = enteredTemperature;
+        this.inputData = enteredTemperature;
     }
 
 

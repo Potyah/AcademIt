@@ -1,17 +1,22 @@
 package ru.academit.potyanikhin;
 
 public class Controller {
-    private Model model;
+    private final Model model;
+    private View view;
 
     public Controller(Model model) {
       this.model = model;
     }
 
-    public boolean checkData(String textEnteredTemperature) {
-   //     String regex = "[0-9,.]";
 
-     //   return textEnteredTemperature.matches(regex);
-
-        return textEnteredTemperature.chars().allMatch(Character::isDigit);
+    public void setView(View view) {
+        this.view = view;
     }
+
+
+   // public double conversionResult (double inputData, ) {
+
+
+
+ //   }
 }
