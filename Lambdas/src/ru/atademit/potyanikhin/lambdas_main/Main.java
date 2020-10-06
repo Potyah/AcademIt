@@ -25,16 +25,16 @@ public class Main {
         ));
 
         // Получить список уникальных имен, вывести список уникальных имен в формате: Имена: Иван, Сергей, Петр
-        String uniquesName = persons.stream()
+        String uniqueNames = persons.stream()
                 .map(Person::getName)
                 .distinct()
                 .collect(Collectors.joining(", ", "Имена: ", "."));
 
-        System.out.println("Список уникальных имен: " + uniquesName);
+        System.out.println(uniqueNames);
 
         // Получить список людей младше 18, посчитать для них средний возраст
         List<Person> personsYoungerEighteen = persons.stream()
-                .filter(x -> x.getAge() < 18)
+                .filter(p -> p.getAge() < 18)
                 .collect(Collectors.toList());
 
         if (personsYoungerEighteen.isEmpty()) {
@@ -54,21 +54,21 @@ public class Main {
         }
 
         // При помощи группировки получить Map, в котором ключи – имена, а значения – средний возраст
-        Map<String, Double> averageByName = persons.stream()
-                .collect(Collectors.groupingBy(Person::getName,
-                        Collectors.averagingDouble(Person::getAge)));
+        Map<String, Double> averageAgeByName = persons.stream()
+                .collect(Collectors.groupingBy(Person::getName, Collectors.averagingDouble(Person::getAge)));
 
-        System.out.println("Средний возраст по имени: " + averageByName);
+        System.out.println("Средний возраст по имени: " + averageAgeByName);
 
         // Получить людей, возраст которых от 20 до 45, вывести в консоль их имена в порядке убывания возраста
         List<Person> personsInInterval = persons.stream()
-                .filter(x -> x.getAge() >= 20 && x.getAge() <= 45)
-                .sorted(Comparator.comparingInt(Person::getAge))
+                .filter(p -> p.getAge() >= 20 && p.getAge() <= 45)
+                .sorted(Comparator.comparingInt(Person::getAge).reversed())
                 .collect(Collectors.toList());
 
         if (personsInInterval.isEmpty()) {
             System.out.println("В списке нет людей, возрастом от 20 до 45 лет");
-        } else
+        } else {
             System.out.println("Список людей, возраст которых от 20 до 45 лет:" + personsInInterval);
+        }
     }
 }

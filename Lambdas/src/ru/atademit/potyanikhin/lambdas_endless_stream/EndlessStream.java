@@ -13,6 +13,7 @@ public class EndlessStream {
 
         IntStream.iterate(0, x -> x + 1)
                 .mapToDouble(Math::sqrt)
-                .limit(limit).forEach(System.out::println);
+                .limit(limit)
+                .forEach(System.out::println);
     }
 }
