@@ -141,6 +141,10 @@ public class HashTable<T> implements Collection<T> {
             throw new NullPointerException("The specified collection is null");
         }
 
+        if (c.isEmpty()) {
+            return false;
+        }
+
         for (T t : c) {
             add(t);
         }
@@ -170,7 +174,7 @@ public class HashTable<T> implements Collection<T> {
             throw new NullPointerException("The specified collection is null");
         }
 
-        if (c.size() == 0) {
+        if (c.isEmpty()) {
             return false;
         }
 
@@ -195,7 +199,7 @@ public class HashTable<T> implements Collection<T> {
             throw new NullPointerException("The specified collection is null");
         }
 
-        if (c.size() == 0) {
+        if (c.isEmpty()) {
             return false;
         }
 
@@ -229,6 +233,10 @@ public class HashTable<T> implements Collection<T> {
     public boolean containsAll(Collection<?> c) {
         if (c == null) {
             throw new NullPointerException("The specified collection is null");
+        }
+
+        if (c.isEmpty()) {
+            return false;
         }
 
         for (Object o : c) {
