@@ -8,18 +8,16 @@ public class Main {
         hashTable1.add(4);
         hashTable1.add(56);
         hashTable1.add(2);
+        hashTable1.add(2);
+        hashTable1.add(2);
+        hashTable1.add(4574);
+        hashTable1.add(5367);
 
         HashTable<Integer> hashTable2 = new HashTable<>(5);
         hashTable2.add(4);
         hashTable2.add(56);
         hashTable2.add(2);
-        hashTable2.add(4574);
-        hashTable2.add(5367);
 
-        hashTable1.retainAll(hashTable2);
-        System.out.println(hashTable1);
-
-        hashTable2.clear();
-        System.out.println(hashTable2);
+        System.out.println(hashTable1.containsAll(hashTable2));
     }
 }
