@@ -10,13 +10,13 @@ public class Main {
         list.add(3);
         list.add(4);
         list.add(5);
-
+        list.add(null);
         System.out.println(list);
 
         list.reverse();
-        System.out.println(list);
 
-        System.out.println(list.removeByData(null));
-        System.out.println(list);
+        SinglyLinkedList<Integer> list2 = new SinglyLinkedList<>();
+        list2 = list.copy();
+        System.out.println(list2);
     }
 }

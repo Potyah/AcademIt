@@ -1,5 +1,8 @@
 package ru.academit.potyanikhin.singly_linked_list;
 
+import java.util.NoSuchElementException;
+import java.util.Objects;
+
 public class SinglyLinkedList<T> {
     private ListItem<T> head;
     private int size;
@@ -10,9 +13,9 @@ public class SinglyLinkedList<T> {
     }
 
     // Получение значение первого элемента
-    public T getFirstItemData() {
+    public T getFirst() {
         if (head == null) {
-            throw new NullPointerException("The specified collection is null");
+            throw new NoSuchElementException("The specified collection is null");
         }
 
         return head.getData();
@@ -20,18 +23,14 @@ public class SinglyLinkedList<T> {
 
     // Получение значения по указанному индексу
     public T getData(int index) {
-        if (index < 0 || index >= getSize()) {
-            throw new IndexOutOfBoundsException("Index " + index + " is out of range, length is " + (size - 1));
-        }
+        rangeCheck(index);
 
         return getItemByIndex(index).getData();
     }
 
     // Изменение значения по указанному индексу, пусть выдает старое значение
-    public T setData(T data, int index) {
-        if (index < 0 || index >= getSize()) {
-            throw new IndexOutOfBoundsException("Index " + index + " is out of range, length is " + (size - 1));
-        }
+    public T setData(int index, T data) {
+        rangeCheck(index);
 
         ListItem<T> item = getItemByIndex(index);
 
@@ -42,36 +41,15 @@ public class SinglyLinkedList<T> {
     }
 
     // Получение элемента по индексу
-    public ListItem<T> getItemByIndex(int index) {
+    private ListItem<T> getItemByIndex(int index) {
         ListItem<T> item;
+        int i = index;
 
-        for (item = head; index != 0; item = item.getNext()) {
-            index--;
+        for (item = head; i != 0; item = item.getNext()) {
+            i--;
         }
 
         return item;
-    }
-
-    // Удаление элемента по индексу, пусть выдает значение элемента
-    public T removeByIndex(int index) {
-        if (index < 0 || index >= getSize()) {
-            throw new IndexOutOfBoundsException("Index " + index + " is out of range, length is " + (size - 1));
-        }
-
-        ListItem<T> currentItem = getItemByIndex(index);
-        ListItem<T> previousItem = getItemByIndex(index - 1);
-
-        T removedElementData = currentItem.getData();
-
-        if (previousItem == null) {
-            return removeFirstItem();
-        }
-
-        previousItem.setNext(currentItem.getNext());
-
-        --size;
-
-        return removedElementData;
     }
 
     // Вставка элемента в начало.
@@ -82,58 +60,58 @@ public class SinglyLinkedList<T> {
     }
 
     // Вставка элемента по индексу.
-    public void add(T data, int index) {
-        if (index < 0 || index >= getSize()) {
-            throw new IndexOutOfBoundsException("Index " + index + " is out of range, length is " + (size - 1));
+    public void add(int index, T data) {
+        rangeCheckForAdd(index);
+
+        if (index == 0) {
+            add(data);
+
+            return;
         }
 
         ListItem<T> previousItem = getItemByIndex(index - 1);
-
-        ListItem<T> item = new ListItem<>(data, previousItem.getNext());
-        previousItem.setNext(item);
+        previousItem.setNext(new ListItem<>(data, previousItem.getNext()));
 
         ++size;
     }
 
-    public void unlink(ListItem<T> currentItem, ListItem<T> previousItem) {
-        if (previousItem == null) {
-            removeFirstItem();
+    private void remove(ListItem<T> item) {
+        if (item == null) {
+            removeFirst();
 
             return;
         }
 
-        if (currentItem.getNext() == null) {
-            previousItem.setNext(null);
-            --size;
-
-            return;
-        }
-
-        previousItem.setNext(currentItem.getNext());
+        item.setNext(item.getNext().getNext());
         --size;
+    }
+
+    // Удаление элемента по индексу, пусть выдает значение элемента
+    public T removeByIndex(int index) {
+        rangeCheck(index);
+
+        if (index == 0) {
+            return removeFirst();
+        }
+
+        ListItem<T> previousItem = getItemByIndex(index - 1);
+        ListItem<T> currentItem = previousItem.getNext();
+
+        T removedData = currentItem.getData();
+        previousItem.setNext(currentItem.getNext());
+
+        --size;
+
+        return removedData;
     }
 
     // Удаление узла по значению, пусть выдает true, если элемент был удален.
     public boolean removeByData(T data) {
-        if (data == null) {
-            for (ListItem<T> currentItem = head, previousItem = null; currentItem != null; previousItem = currentItem,
-                    currentItem = currentItem.getNext()) {
-                if (currentItem.getData() == null) {
-
-                    unlink(currentItem, previousItem);
-
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         for (ListItem<T> currentItem = head, previousItem = null; currentItem != null; previousItem = currentItem,
                 currentItem = currentItem.getNext()) {
-            if (currentItem.getData().equals(data)) {
+            if (Objects.equals(currentItem.getData(), data)) {
 
-                unlink(currentItem, previousItem);
+                remove(previousItem);
 
                 return true;
             }
@@ -143,12 +121,12 @@ public class SinglyLinkedList<T> {
     }
 
     // Удаление первого элемента, пусть выдает значение элемента.
-    public T removeFirstItem() {
+    public T removeFirst() {
         if (head == null) {
-            throw new NullPointerException("The specified collection is null");
+            throw new NoSuchElementException("The specified collection is null");
         }
 
-        T removedData = getFirstItemData();
+        T removedData = head.getData();
         head = head.getNext();
 
         --size;
@@ -175,13 +153,42 @@ public class SinglyLinkedList<T> {
     // Копирование списка.
     public SinglyLinkedList<T> copy() {
         SinglyLinkedList<T> copy = new SinglyLinkedList<>();
+        int i = 0;
 
         for (ListItem<T> item = head; item != null; item = item.getNext()) {
-            copy.add(item.getData());
+            copy.add(i, item.getData());
+            i++;
         }
 
-        copy.reverse();
-
         return copy;
+    }
+
+    private void rangeCheckForAdd(int index) {
+        if (index < 0 || index > getSize()) {
+            throw new IndexOutOfBoundsException("Index " + index + " is out of range, permissible value from 0 to " + size);
+        }
+    }
+
+    private void rangeCheck(int index) {
+        if (index < 0 || index >= getSize()) {
+            throw new IndexOutOfBoundsException("Index " + index + " is out of range, permissible value from 0 to " + (size - 1));
+        }
+    }
+
+    @Override
+    public String toString() {
+        if (size == 0) {
+            return "{ }";
+        }
+
+        StringBuilder stringBuilder = new StringBuilder("{");
+
+        for (int i = 0; i < size; i++) {
+            stringBuilder.append(getItemByIndex(i).getData()).append(", ");
+        }
+
+        stringBuilder.replace(stringBuilder.length() - 2, stringBuilder.length(), "}");
+
+        return stringBuilder.toString();
     }
 }
