@@ -47,15 +47,7 @@ public class ArrayList<T> implements List<T> {
     // Добавить новый элемент в конец списка
     @Override
     public boolean add(T t) {
-        if (size >= items.length) {
-            if (size > 0) {
-                ensureCapacity(size * 2);
-            } else {
-                ensureCapacity(10);
-            }
-        }
-
-        add(0, t);
+        add(size, t);
 
         return true;
     }
@@ -63,9 +55,7 @@ public class ArrayList<T> implements List<T> {
     // Добавить элемент в позицию index
     @Override
     public void add(int index, T t) {
-        if (isIndexOutOfBounds(index)) {
-            throw new IndexOutOfBoundsException("Index " + index + " is out of range. Length is " + size);
-        }
+        rangeCheckForAdd(index);
 
         if (size >= items.length) {
             if (size > 0) {
@@ -85,11 +75,7 @@ public class ArrayList<T> implements List<T> {
     // Добавить все элементы коллекции collection в список в порядке их расположения в collection
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        if (c == null) {
-            throw new NullPointerException("The specified collection is null");
-        }
-
-        return addAll(items.length, c);
+        return addAll(size, c);
     }
 
     // Добавить все элементы collection в список начиная с индекса
@@ -99,11 +85,13 @@ public class ArrayList<T> implements List<T> {
             throw new NullPointerException("The specified collection is null");
         }
 
-        if (isIndexOutOfBounds(index)) {
-            throw new IndexOutOfBoundsException("Index " + index + " is out of range. Length is " + size);
+        if (c.isEmpty()) {
+            return false;
         }
 
-        ensureCapacity(items.length + c.size());
+        rangeCheckForAdd(index);
+
+        ensureCapacity(size + c.size());
 
         System.arraycopy(items, index, items, index + c.size(), size - index);
 
@@ -125,8 +113,9 @@ public class ArrayList<T> implements List<T> {
     // Удалить все элементы из списка
     @Override
     public void clear() {
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < size; i++) {
             items[i] = null;
+        }
 
         size = 0;
 
@@ -157,9 +146,7 @@ public class ArrayList<T> implements List<T> {
     // Возвращение элемента, расположенного в указанной позиции списка
     @Override
     public T get(int index) {
-        if (isIndexOutOfBounds(index)) {
-            throw new IndexOutOfBoundsException("index " + index + " is out of range. Length is " + size);
-        }
+        rangeCheck(index);
 
         return items[index];
     }
@@ -167,9 +154,7 @@ public class ArrayList<T> implements List<T> {
     // Замена элемента в указанной позиции index на переданный element
     @Override
     public T set(int index, T t) {
-        if (isIndexOutOfBounds(index)) {
-            throw new IndexOutOfBoundsException("index " + index + " is out of range. Length is " + size);
-        }
+        rangeCheck(index);
 
         T result = items[index];
         items[index] = t;
@@ -192,15 +177,16 @@ public class ArrayList<T> implements List<T> {
     // Получение индекса последнего элемента в списке
     @Override
     public int lastIndexOf(Object o) {
-        for (int i = size - 1; i >= 0; i--)
+        for (int i = size - 1; i >= 0; i--) {
             if (Objects.equals(o, items[i])) {
                 return i;
             }
+        }
 
         return -1;
     }
 
-    // Получение размера массива
+    // Получение размера коллекции
     @Override
     public int size() {
         return size;
@@ -214,13 +200,17 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder("{ ");
+        if (this.isEmpty()) {
+            return "{ }";
+        }
+
+        StringBuilder stringBuilder = new StringBuilder("{");
 
         for (int i = 0; i < size; i++) {
             stringBuilder.append(items[i]).append(", ");
         }
 
-        stringBuilder.replace(stringBuilder.length() - 2, stringBuilder.length(), " }");
+        stringBuilder.replace(stringBuilder.length() - 2, stringBuilder.length(), "}");
 
         return stringBuilder.toString();
     }
@@ -257,11 +247,9 @@ public class ArrayList<T> implements List<T> {
     // Удаление элемента в указанной позиции индекса
     @Override
     public T remove(int index) {
-        if (isIndexOutOfBounds(index)) {
-            throw new IndexOutOfBoundsException("Index " + index + " is out of range. Length is " + size);
-        }
+        rangeCheck(index);
 
-        T removedElement = items[index];
+        T removedItem = items[index];
 
         if (index < size - 1) {
             System.arraycopy(items, index + 1, items, index, size - index - 1);
@@ -272,7 +260,7 @@ public class ArrayList<T> implements List<T> {
 
         ++modCount;
 
-        return removedElement;
+        return removedItem;
     }
 
     // Удаление из списка переданного элемента
@@ -296,18 +284,22 @@ public class ArrayList<T> implements List<T> {
             throw new NullPointerException("The specified collection is null");
         }
 
-        boolean result = false;
+        if (c.isEmpty()) {
+            return false;
+        }
+
+        boolean isResult = false;
 
         for (int i = 0; i < size; i++) {
             if (c.contains(items[i])) {
                 remove(items[i]);
                 i--;
 
-                result = true;
+                isResult = true;
             }
         }
 
-        return result;
+        return isResult;
     }
 
     @Override
@@ -316,18 +308,22 @@ public class ArrayList<T> implements List<T> {
             throw new NullPointerException("The specified collection is null");
         }
 
-        boolean result = false;
+        if (c.isEmpty()) {
+            return false;
+        }
+
+        boolean isResult = false;
 
         for (int i = 0; i < size; i++) {
             if (!c.contains(items[i])) {
                 remove(items[i]);
                 i--;
 
-                result = true;
+                isResult = true;
             }
         }
 
-        return result;
+        return isResult;
     }
 
     // Превращение списка в фиксированный массив
@@ -342,12 +338,13 @@ public class ArrayList<T> implements List<T> {
             throw new NullPointerException("The specified array is null");
         }
 
-        if (a.length < size)
+        if (a.length < size) {
             //noinspection unchecked
-            return (T1[]) Arrays.copyOf(items, size);
+            return (T1[]) Arrays.copyOf(items, size, a.getClass());
+        }
 
-        //noinspection unchecked
-        System.arraycopy(items, 0, (T[]) a, 0, size);
+        //noinspection SuspiciousSystemArraycopy
+        System.arraycopy(items, 0, a, 0, size);
 
         if (a.length > size)
             a[size] = null;
@@ -355,8 +352,16 @@ public class ArrayList<T> implements List<T> {
         return a;
     }
 
-    public boolean isIndexOutOfBounds(int index) {
-        return index < 0 || index > size;
+    private void rangeCheck(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index " + index + " is out of range, permissible value from 0 to " + (size - 1));
+        }
+    }
+
+    private void rangeCheckForAdd(int index) {
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException("Index " + index + " is out of range, permissible value from 0 to " + size);
+        }
     }
 
     @Override
